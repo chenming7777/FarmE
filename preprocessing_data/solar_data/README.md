@@ -14,6 +14,22 @@ The environmental data are collected from a set of sensors installed in an in-ho
 
 The inverter is a [Fronius Primo 8.2-1 8.2kW] (https://www.fronius.com/en-us/usa/photovoltaics/products/all-products/inverters/fronius-primo/fronius-primo-8-2-1-208-240) which is inverting DC electrical data from an array comprised of 38 p-Si Canadian solar panels (275Wp) in location latitude -20.510886 e longitude -54.619878.
 
+Inverter information:
+The system uses a Fronius Primo 8.2-1 8.2kW inverter.
+
+Solar panel information:
+The array is comprised of p-Si Canadian solar panels.
+Each panel is rated at 275Wp (Watts peak).
+
+Total system capacity:
+The inverter is rated at 8.2kW, which should be close to the total capacity of the solar array.
+
+
+To estimate the number of panels:
+Calculate the number of panels needed to reach 8.2kW:
+8200W / 275W per panel ≈ 29.82 panels
+Round up to the nearest whole number: 30 panels
+
 The environmental data collected from the sensors are avaiable in csv files in folder station. Each csv file is named according to the day of the collected data. Ex: 20191004.csv has data from October, 4th, 2019. The data in the csv file are presented in 1min intervals.
 - dia_mes_ano: year, month, and day
 - hora_minuto: hour and minutes (24h format)
