@@ -1,24 +1,25 @@
-.sidebar{
-    min-height: 100vh;
-    display:inline-flex;
+.sidebar {
+    height: 100vh; /* Ensures the sidebar spans the entire viewport height */
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f0f4f9;
+    background-color: #f0f4f9; /* Sets the background color */
     padding: 25px 15px;
-}
-.sidebar img{
-    width: 20px;
+    width: 100px; /* Width when collapsed */
+    transition: width 0.3s ease;
 }
 
-.sidebar .menu{
-    display: block;
-    margin-left: 10px;
+.sidebar.extended {
+    width: 250px; /* Width when extended */
+}
+
+.sidebar .menu {
     cursor: pointer;
+    margin-bottom: 20px; /* Adds space below the menu icon */
 }
 
-.sidebar .new_chat{
-    margin-top: 50px;
-    display: inline-flex;
+.sidebar .new-chat {
+    display: flex;
     align-items: center;
     gap: 10px;
     padding: 10px 15px;
@@ -27,41 +28,62 @@
     font-size: 14px;
     color: grey;
     cursor: pointer;
-
+    margin-top: 20px;
 }
 
-.sidebar .recent{
-    display: flex;
-    flex-direction: column;
-
+.sidebar .new-chat p,
+.sidebar .recent,
+.sidebar .bottom-item p {
+    display: none;
 }
 
-.siderbar .recent-title{
+.sidebar.extended .new-chat p,
+.sidebar.extended .recent,
+.sidebar.extended .bottom-item p {
+    display: block;
+}
+
+.sidebar .recent {
     margin-top: 30px;
-    margin-bottom: 20px;
 }
 
-.sidebar .recent_entry{
+.sidebar .recent-title {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.sidebar .recent-entry {
     display: flex;
-    align-items: start;
+    align-items: center;
     gap: 10px;
-    padding: 10px;
-    padding-right: 40px;
-    border-radius: 50px;
+    padding: 8px 15px;
+    border-radius: 5px;
     color: #282828;
-    cursor: pointer
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.sidebar ,rencent-entry:hover{
+.sidebar .recent-entry:hover {
     background-color: #e2e6eb;
 }
 
-.sidebar .bottom{
-    display: flex;
-    flex-direction: column;
+.sidebar .recent-entry p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.sidebar .bottom-item{
-    padding-right: 10px;
+.sidebar .bottom {
+    margin-top: auto;
+}
+
+.sidebar .bottom-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    color: #666;
+    font-size: 14px;
     cursor: pointer;
 }

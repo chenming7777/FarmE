@@ -1,44 +1,49 @@
-import React, { useState } from 'react'
-import './Sidebar.css'
-import { assets } from '../../assets/assets'
-const Sidebar = () => {
+import React, { useState } from 'react';
+import './Sidebar.css';
+import { assets } from '../../assets/assets';
 
-    const [extended, setExtended] = useState(false)
+const Sidebar = () => {
+    const [extended, setExtended] = useState(false);
 
     return (
-        <div className="sidebar">
+        <div className={`sidebar ${extended ? 'extended' : ''}`}>
             <div className="top">
-                <img className='menu' src={assets.menu_icon} alt="" />
+                <img 
+                    onClick={() => setExtended(prev => !prev)} 
+                    className='menu' 
+                    src={assets.menu_icon} 
+                    alt="menu icon" 
+                />
                 <div className="new-chat">
-                    <img src={assets.plus_icon} alt="" />
-                    {extended ? <p>New Chat</p> : null}
+                    <img src={assets.plus_icon} alt="plus icon" />
+                    {extended && <p>New Chat</p>}
                 </div>
-                {extended
-                    ? <div className="recent">
+                {extended && (
+                    <div className="recent">
                         <p className="recent-title">Recent</p>
                         <div className="recent-entry">
-                            <img src={assets.message_icon} alt="" />
-                            <p>What is react?</p>
+                            <img src={assets.message_icon} alt="message icon" />
+                            <p>What is react? It is some good dododoododo dodood ddoo</p>
                         </div>
                     </div>
-                    : null}
+                )}
             </div>
-            <div className="bottom:">
-                <div className="bottom-item recent-entry">
-                    <img src={assets.question_icon} alt="" />
-                    {extended?<p>Help</p>:null}
+            <div className="bottom">
+                <div className="bottom-item">
+                    <img src={assets.question_icon} alt="question icon" />
+                    {extended && <p>Help</p>}
                 </div>
-                <div className="bottom-item recent-entry">
-                    <img src={assets.history_icon} alt="" />
-                    {extended?<p>Activity</p>:null}
+                <div className="bottom-item">
+                    <img src={assets.history_icon} alt="history icon" />
+                    {extended && <p>Activity</p>}
                 </div>
-                <div className="bottom-item recent-entry">
-                    <img src={assets.setting_icon} alt="" />
-                    {extended?<p>Setting</p>:null}
+                <div className="bottom-item">
+                    <img src={assets.setting_icon} alt="setting icon" />
+                    {extended && <p>Setting</p>}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Sidebar
+export default Sidebar;
