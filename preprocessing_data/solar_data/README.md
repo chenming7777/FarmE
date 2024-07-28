@@ -30,10 +30,9 @@ Calculate the number of panels needed to reach 8.2kW:
 8200W / 275W per panel ≈ 29.82 panels
 Round up to the nearest whole number: 30 panels
 
-The environmental data collected from the sensors are avaiable in csv files in folder station. Each csv file is named according to the day of the collected data. Ex: 20191004.csv has data from October, 4th, 2019. The data in the csv file are presented in 1min intervals.
-- dia_mes_ano: year, month, and day
-- hora_minuto: hour and minutes (24h format)
-- irr: solar irradiation (W/m2)
+The environmental data collected from the sensors are avaiable in csv files in folder station. Each csv file is named according to the day of the collected data. The data in the csv file are presented in 1min intervals.
+- timestamp: yyyy-mm-dd HH:MM:SS
+- IRR: solar irradiation (W/m2)
 - massaPM1: 1um particulate mass (ug/m3)
 - massaPM2: 2.5um particulate mass (ug/m3)
 - massaPM4: 4um particulate mass (ug/m3)
@@ -48,15 +47,13 @@ The environmental data collected from the sensors are avaiable in csv files in f
 - vento_vel: wind speed (meters/second)
 - rainfall: rain precipitation
 
-The electrical data collected from the inverter are avaiable in csv files in folder inverter. Each csv file is named according to the day of the collected data. Ex: 20191004.csv has data from October, 4th, 2019. The data in the csv file are presented in 1min intervals.
-- dia_mes_ano: year, month, and day
-- hora_minuto: hour and minutes (24h format)
+The electrical data collected from the inverter are avaiable in csv files in folder inverter. Each csv file is named according to the day of the collected data.
+
 - P_AC: alternate power (W)
 - I_AC: alternate current (A)
 - I_DC: direct current (A)	
 - V_AC: alternate voltage (V)	
 - V_DC: direct voltage (V)
-- IRR: (W/m2)
 
 Contact us
 =========================
