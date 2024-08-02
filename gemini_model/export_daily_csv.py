@@ -18,7 +18,7 @@ if filtered_df.empty:
     print(f"No data available for {date_str}")
 else:
     # Create the output filename
-    output_filename = f"data_{date_str}.csv"
+    output_filename = f"./gemini_model/daily_energy_csv_database/energy_data_{date_str}.csv"
     
     # Export the filtered data to a new CSV file
     filtered_df.to_csv(output_filename, index=False)
