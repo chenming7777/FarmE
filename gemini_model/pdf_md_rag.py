@@ -1,3 +1,9 @@
+#In this code it will automatically convert the pdf files to markdown files and then it will use the RAG-based Q&A system to answer the questions based on the context of the pdf files.
+# You need to have a directory that can contain the pdf files and the output will be saved in the output_markdown directory.
+# Do not need the input this will directly take the pdf files and convert them to markdown files and then answer the questions based on the context of the pdf files.
+# This code will also generate the markdown file from the pdf and save it into the output_markdown directory.
+
+
 import nest_asyncio
 from llama_parse import LlamaParse
 from llama_index.core import Document
@@ -77,7 +83,6 @@ def get_vector_store(text_chunks):
 def get_conversation_chain():
     prompt_template = """
     You are a helpful AI assistant tasked with answering questions based on the provided context. Your goal is to understand the user's intent and provide accurate, detailed information.
-
     Instructions:
         1. Carefully analyze the user's question and the provided context.
         2. If the exact answer is in the context, provide a detailed response with all relevant information.
@@ -95,7 +100,7 @@ def get_conversation_chain():
         Your detailed response:
 """
 
-    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.3)
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
     return chain
