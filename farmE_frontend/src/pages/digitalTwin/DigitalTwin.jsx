@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const DigitalTwin = () => {
-  return (
-    <div>DigitalTwin</div>
-  )
-}
+  return <div>DigitalTwin</div>;
+};
 
-export default DigitalTwin
+export default DigitalTwin;
