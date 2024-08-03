@@ -30,3 +30,11 @@ export const sidebarList = {
     url: "/smart-assistant",
   },
 };
+
+export const sidebarDown = {
+  Notification: {
+    active: "src/assets/sidebar/active/bell.png",
+    inactive: "src/assets/sidebar/inactive/bell.png",
+    url: "/notification",
+  },
+};

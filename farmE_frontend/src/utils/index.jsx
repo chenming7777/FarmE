@@ -13,8 +13,8 @@ export const matchPathName = (path) => {
       return "Solar Insights";
     case "/smart-assistant":
       return "Smart Assistant";
-    case "/notifications":
-      return "Notifications";
+    case "/notification":
+      return "Notification";
     default:
       return "";
   }
