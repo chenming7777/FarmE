@@ -9,7 +9,11 @@ import os
 from dotenv import load_dotenv
 import getpass
 
+from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.responses import JSONResponse
+import uvicorn
 
+app = FastAPI()
 
 # Load environment variables
 load_dotenv()
@@ -118,3 +122,64 @@ if __name__ == "__main__":
         "image": encoded_image
     })
     print("Text and image response:", main(text_and_image_input))
+    
+@app.post("/process_text/")
+async def process_text(text_input: str = Form(...)):
+    try:
+        # Prepare the JSON input for the main function without image data
+        json_input = json.dumps({
+            "text_input": text_input
+        })
+        
+        # Process the input using the main function
+        response = main(json_input)
+        
+        # Return the result as a JSON response
+        return JSONResponse(status_code=200, content=json.loads(response))
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    
+@app.post("/process_image/")
+async def process_image(image: UploadFile = File(...)):
+    try:
+        # Read the image file and encode it to base64
+        image_content = await image.read()
+        encoded_image = base64.b64encode(image_content).decode('utf-8')
+
+        # Prepare the JSON input for the main function without text input
+        json_input = json.dumps({
+            "image": encoded_image
+        })
+        
+        # Process the input using the main function
+        response = main(json_input)
+        
+        # Return the result as a JSON response
+        return JSONResponse(status_code=200, content=json.loads(response))
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+    
+@app.post("/process_input/")
+async def processing_input(text_input: str = Form(...), image: UploadFile = File(...)):
+    try:
+        # Read the image file and encode it to base64
+        image_content = await image.read()
+        encoded_image = base64.b64encode(image_content).decode('utf-8')
+
+        # Prepare the JSON input for the main function
+        json_input = json.dumps({
+            "text_input": text_input,
+            "image": encoded_image
+        })
+        
+        # Process the input using the main function
+        response = main(json_input)
+        
+        # Return the result as a JSON response
+        return JSONResponse(status_code=200, content=json.loads(response))
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+    
+if __name__ == "__main__":
+    uvicorn.run (app, port = 5000, host = "0.0.0.0")

@@ -18,6 +18,11 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 
+from fastapi import FastAPI
+import uvicorn
+
+app = FastAPI()
+
 # Apply nest_asyncio to allow asynchronous operations in Jupyter notebooks
 nest_asyncio.apply()
 
@@ -36,22 +41,39 @@ parser = LlamaParse(
 )
 
 def combine_pdf_pages(file_path):
-    parsed_pages = parser.load_data(file_path)
-    combined_text = "\n\n".join([page.text for page in parsed_pages])
-    combined_metadata = {
-        "source": file_path,
-        "file_name": os.path.basename(file_path),
-        "page_count": len(parsed_pages)
-    }
-    return Document(text=combined_text, metadata=combined_metadata)
+    response = None  # Initialize response to None to ensure it's always defined
+    try:
+        response = parser.load_data(file_path)  # Assuming this is an asynchronous call that returns a response
+        parsed_pages = response.get('pages', [])
+        combined_text = "\n\n".join([page.text for page in parsed_pages])
+        combined_metadata = {
+            "source": file_path,
+            "file_name": os.path.basename(file_path),
+            "page_count": len(parsed_pages)
+        }
+        return Document(text=combined_text, metadata=combined_metadata)
+    except Exception as e:
+        print(f"Error processing {file_path}: {str(e)}")
+        if response is not None:
+            print(f"Response received: {response}")  # Only print if response is not None
+        else:
+            print("No response was received from the parser.")
+        return None
+
+
 
 def load_and_combine_pdfs(directory):
     combined_documents = []
     for filename in os.listdir(directory):
         if filename.endswith(".pdf"):
             file_path = os.path.join(directory, filename)
-            combined_documents.append(combine_pdf_pages(file_path))
+            document = combine_pdf_pages(file_path)
+            if document is not None:  # Only append if the document is successfully parsed
+                combined_documents.append(document)
+            else:
+                print(f"Skipping document {filename} due to parsing errors.")
     return combined_documents
+
 
 def save_to_markdown(documents, output_directory):
     if not os.path.exists(output_directory):
@@ -115,7 +137,8 @@ def user_input(user_question):
         , return_only_outputs=True)
     print("Reply:", response["output_text"])
 
-def main():
+@app.post("/rag_chain_invoke")
+def main(user_question):
     print("PDF to Markdown Conversion and RAG-based Q&A System")
 
     # Load and combine PDFs
@@ -142,12 +165,17 @@ def main():
     get_vector_store(text_chunks)
     print("Processing complete.")
 
+    response = user_input({
+        "question":user_question
+        })
+    return response
     # Start Q&A loop
-    while True:
-        user_question = input("\nAsk a question (or type 'quit' to exit): ")
-        if user_question.lower() == 'quit':
-            break
-        user_input(user_question)
+    # while True:
+    #     user_question = input("\nAsk a question (or type 'quit' to exit): ")
+    #     if user_question.lower() == 'quit':
+    #         break
+    #     user_input(user_question)
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app,port=5001,host="0.0.0.0")
+    # main()
