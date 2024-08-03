@@ -4,7 +4,7 @@ import Divider from "@mui/material/Divider";
 import Card from "@mui/material/Card";
 import { Button, Avatar, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { sidebarList } from "../../types";
+import { sidebarList, sidebarDown } from "../../types";
 
 const drawerWidth = 300;
 
@@ -239,43 +239,86 @@ export default function CustomDrawer() {
         </Card>
       </div>
 
-      {/* <div
+      <div
         style={{
           flexGrow: 1,
-          padding: "1rem 2rem",
+          // padding: "1rem 2rem",
         }}
       >
         <div>
           <List>
-            {["Notification", "Settings", "Log Out"].map((text, index) => (
-              <div
+            {["Notification"].map((text, index) => (
+              <NavLink
                 key={text}
-                style={{
-                  borderRadius: "20px",
-                  paddingTop: "0.8rem",
-                  paddingBottom: "0.8rem",
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "0.3rem",
-                }}
+                to={sidebarDown[text].url}
+                className={({ isActive, isPending }) =>
+                  isActive
+                    ? "active router-nav-link"
+                    : isPending
+                      ? "pending router-nav-link"
+                      : ""
+                }
               >
-                <Avatar
-                  src={sidebarDown[text]}
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    backgroundColor: "#FFF",
-                    padding: "0.5rem",
-                  }}
-                />
-                <Typography style={{ marginLeft: "1rem", fontWeight: "bold" }}>
-                  {text}
-                </Typography>
-              </div>
+                {({ isActive }) =>
+                  isActive ? (
+                    <div
+                      style={{
+                        borderRadius: "20px",
+                        padding: "0.8rem 2rem",
+                        backgroundColor: "#fff",
+                        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      <Avatar
+                        src={sidebarDown[text].active}
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          backgroundColor: "#6FC635",
+                          padding: "0.5rem",
+                        }}
+                      />
+                      <Typography
+                        style={{ marginLeft: "1rem", fontWeight: "bold" }}
+                      >
+                        {text}
+                      </Typography>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        borderRadius: "20px",
+                        padding: "0.8rem 2rem",
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      <Avatar
+                        src={sidebarDown[text].inactive}
+                        style={{
+                          width: "25px",
+                          height: "25px",
+                          backgroundColor: "#FFF",
+                          padding: "0.5rem",
+                        }}
+                      />
+                      <Typography
+                        style={{ marginLeft: "1rem", fontWeight: "bold" }}
+                      >
+                        {text}
+                      </Typography>
+                    </div>
+                  )
+                }
+              </NavLink>
             ))}
           </List>
         </div>
-        <div>
+        {/* <div>
           <Avatar
             // src={sidebarDown[text]}
             style={{
@@ -285,8 +328,8 @@ export default function CustomDrawer() {
               padding: "0.5rem",
             }}
           />
-        </div>
-      </div> */}
+        </div> */}
+      </div>
     </Drawer>
   );
 }

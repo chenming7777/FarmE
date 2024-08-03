@@ -68,6 +68,21 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+
+.panel {
+  width: 160px;
+  height: 70px;
+  background-size: cover;
+  background-image:
+    url("src/assets/dashboard/active-panel.png");
+}
+
+
+.panel:hover {
+  background-image:
+    url("src/assets/dashboard/hover-panel.png") !important; 
+}
+
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
