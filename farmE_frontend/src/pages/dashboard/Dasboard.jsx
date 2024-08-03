@@ -1,6 +1,39 @@
 import Typography from "@mui/material/Typography";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import { Button, Card, Avatar } from "@mui/material";
+import {
+  Button,
+  Card,
+  Avatar,
+  Paper,
+  Box,
+  Select,
+  Divider,
+  MenuItem,
+} from "@mui/material";
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
+import BoltIcon from "@mui/icons-material/Bolt";
+
+const energyData = [
+  { name: "", produced: 0, consumed: 0 },
+  { name: "March", produced: 180, consumed: 220 },
+  { name: "April", produced: 200, consumed: 180 },
+  { name: "May", produced: 250, consumed: 230 },
+  { name: "June", produced: 280, consumed: 260 },
+  { name: "July", produced: 100, consumed: 50 },
+  { name: "August", produced: 280, consumed: 200 },
+  { name: "", produced: 100, consumed: 150 },
+];
 
 const Dashboard = () => {
   return (
@@ -63,19 +96,190 @@ const Dashboard = () => {
         style={{
           display: "flex",
           justifyContent: "space-between",
+          gap: "2rem",
         }}
       >
         {/* Left Section */}
         <div
           style={{
-            flexGrow: 8,
+            flexGrow: 4,
           }}
-        ></div>
+        >
+          {/* Panel Section */}
+          <div></div>
+
+          {/* Chart Section */}
+          <div>
+            <Card
+              sx={{
+                p: 3.5,
+                borderRadius: 3,
+                // boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                boxShadow: "none",
+              }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                // mb={2}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#000",
+                    fontWeight: "900",
+                  }}
+                >
+                  Energy Produced
+                </Typography>
+                <Box>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      mr: 2,
+                      py: 1,
+                      px: 2,
+                      color: "#000",
+                      border: "1px solid #000",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <BoltIcon
+                      sx={{
+                        mr: 2,
+                      }}
+                    />
+                    300 kWh
+                  </Button>
+                  <Select
+                    size="small"
+                    defaultValue="monthly"
+                    sx={{
+                      height: "100%",
+                      mr: 2,
+                      px: 3,
+                      border: "1px solid #000",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <MenuItem value="monthly">Monthly</MenuItem>
+                    <MenuItem value="weekly">Weekly</MenuItem>
+                  </Select>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#000",
+                      padding: "0.5rem 2rem",
+                      borderRadius: 25,
+                    }}
+                  >
+                    Download Report
+                  </Button>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  marginY: 5,
+                }}
+              ></Box>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={energyData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  {/* <Legend /> */}
+                  <Line
+                    type="linear"
+                    dataKey="produced"
+                    dot={{
+                      r: 6,
+                      stroke: "#2D825A",
+                    }}
+                    stroke="#2D825A"
+                    activeDot={{ r: 8 }}
+                  />
+                  <Line
+                    type="linear"
+                    dataKey="consumed"
+                    stroke="#E8D686"
+                    dot={{
+                      r: 6,
+                    }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "end",
+                  mt: 2,
+                  gap: "3rem",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "10px",
+                      height: "10px",
+                      backgroundColor: "#57CE8D",
+                      borderRadius: "50%",
+                      border: "1px solid #2D825A",
+                    }}
+                  ></div>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#000",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Energy Produced
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "10px",
+                      height: "10px",
+                      backgroundColor: "#FFE760",
+                      borderRadius: "50%",
+                      border: "1px solid #E8D686",
+                    }}
+                  ></div>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      color: "#000",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Energy Consumption
+                  </Typography>
+                </Box>
+              </Box>
+            </Card>
+          </div>
+        </div>
 
         {/* Right Section */}
         <div
           style={{
-            flexGrow: 1,
+            flexGrow: 5,
+            minWidth: "460px",
           }}
         >
           {/* Weather Conditions */}
@@ -96,7 +300,7 @@ const Dashboard = () => {
               >
                 Weather Conditions
               </Typography>
-              <Button
+              {/* <Button
                 variant="contained"
                 sx={{
                   backgroundColor: "#000",
@@ -105,7 +309,7 @@ const Dashboard = () => {
                 }}
               >
                 Download Report
-              </Button>
+              </Button> */}
             </div>
             <div
               style={{
