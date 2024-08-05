@@ -1,11 +1,24 @@
 import numpy as np
 import pandas as pd
-from tensorflow.keras.models import load_model
+# from tensorflow import keras
+from keras.api.models import load_model
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
 
+from fastapi import FastAPI,HTTPException
+from fastapi.responses import RedirectResponse,FileResponse
+import uvicorn
+from pydantic import BaseModel,Field
+
+app = FastAPI()
+
+class CSVRead(BaseModel):
+    csv: str | None = Field(default='2019-11-20_sun.csv', description="file path to csv on local(Set Home Directory)")
+
+
 # Load the saved model
 model = load_model('./gemini_model/energy_gen_pred/energy_gen_lstm_model.h5')
+
 
 # Function to preprocess new data
 def preprocess_data(df):
@@ -35,53 +48,73 @@ def create_sequences(df, seq_length):
         sequences.append(seq)
     return np.array(sequences)
 
-# Load and preprocess new data
-# Replace 'new_data.csv' with the path to your new data file
-new_data = pd.read_csv('C:\\FarmE\\preprocessing_data\\2019-11-20_sun.csv')
-preprocessed_data, scaler = preprocess_data(new_data)
+@app.post("/predict")
+def predict(request_data:CSVRead):
+    # Load and preprocess new data
+    # Replace 'new_data.csv' with the path to your new data file
+    
+    #to input filename from fastapi replace the beginning of the function with this:
+    # def predict(filename):
+    # directory = "<insert base directory where the files are stored>"
+    # csv = directory + filename
+    # new_data = pd.read_csv(csv)
+    
+    
+    home_dir = 'D:\idk.py\preprocessing_data\\'
+    filepath = home_dir + request_data.csv 
+    new_data = pd.read_csv(filepath)
+    preprocessed_data, scaler = preprocess_data(new_data)
 
-# Create sequences
-SEQ_LENGTH = 24  # This should be the same as what you used during training
-sequences = create_sequences(preprocessed_data, SEQ_LENGTH)
+    # Create seque'nces
+    SEQ_LENGTH = 24  # This should be the same as what you used during training
+    sequences = create_sequences(preprocessed_data, SEQ_LENGTH)
 
-# Make predictions
-predictions = model.predict(sequences)
+    # Make predictions
+    predictions = model.predict(sequences)
 
-# Denormalize the predictions
-# We need to create a dummy array with the same shape as the input to the scaler
-dummy = np.zeros((len(predictions), len(preprocessed_data.columns)))
-dummy[:, preprocessed_data.columns.get_loc('P_AC')] = predictions.flatten()
-denormalized_predictions = scaler.inverse_transform(dummy)[:, preprocessed_data.columns.get_loc('P_AC')]
+    # Denormalize the predictions
+    # We need to create a dummy array with the same shape as the input to the scaler
+    dummy = np.zeros((len(predictions), len(preprocessed_data.columns)))
+    dummy[:, preprocessed_data.columns.get_loc('P_AC')] = predictions.flatten()
+    denormalized_predictions = scaler.inverse_transform(dummy)[:, preprocessed_data.columns.get_loc('P_AC')]
 
-# Add predictions to the original dataframe
-new_data['predicted_P_AC'] = np.nan  # Initialize with NaN
-new_data.loc[SEQ_LENGTH-1:, 'predicted_P_AC'] = denormalized_predictions
+    # Add predictions to the original dataframe
+    new_data['predicted_P_AC'] = np.nan  # Initialize with NaN
+    new_data.loc[SEQ_LENGTH-1:, 'predicted_P_AC'] = denormalized_predictions
 
-# Create the graph
-plt.figure(figsize=(12, 6))
-plt.plot(new_data['timestamp'], new_data['P_AC'], label='Actual P_AC', color='blue')
-plt.plot(new_data['timestamp'], new_data['predicted_P_AC'], label='Predicted P_AC', color='red')
+    # Create the graph
+    plt.figure(figsize=(12, 6))
+    plt.plot(new_data['timestamp'], new_data['P_AC'], label='Actual P_AC', color='blue')
+    plt.plot(new_data['timestamp'], new_data['predicted_P_AC'], label='Predicted P_AC', color='red')
 
-plt.title('Actual vs Predicted P_AC Over Time')
-plt.xlabel('Timestamp')
-plt.ylabel('P_AC')
-plt.legend()
+    plt.title('Actual vs Predicted P_AC Over Time')
+    plt.xlabel('Timestamp')
+    plt.ylabel('P_AC')
+    plt.legend()
 
-# Rotate and align the tick labels so they look better
-plt.gcf().autofmt_xdate()
+    # Rotate and align the tick labels so they look better
+    plt.gcf().autofmt_xdate()
 
-# Use a tight layout
-plt.tight_layout()
+    # Use a tight layout
+    plt.tight_layout()
 
-# Save the graph
-plt.savefig('P_AC_prediction_graph.png')
+    # Save the graph
+    plt.savefig('P_AC_prediction_graph.png')
 
-# Display the graph
-plt.show()
+    # Display the graph
+    # plt.show()
 
-print("Graph saved as 'P_AC_prediction_graph.png'")
-
-# Print or save the results
-print(new_data[['timestamp', 'P_AC', 'predicted_P_AC']])
-# Optionally, save to a CSV file
-new_data.to_csv('predictions_output.csv', index=False)
+    print("Graph saved as 'P_AC_prediction_graph.png'")
+    # root_dir = 'D:\idk.py\\'
+    
+    # Print or save the results
+    print(new_data[['timestamp', 'P_AC', 'predicted_P_AC']])
+    # Optionally, save to a CSV file
+    new_data.to_csv('predictions_output.csv', index=False)
+    
+    root_dir = 'D:\idk.py\\'
+    
+    response = FileResponse(path=root_dir + 'predictions_output.csv')
+    return response
+    #have the function return the csv file as output for the function   
+    
