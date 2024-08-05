@@ -53,14 +53,7 @@ def predict(request_data:CSVRead):
     # Load and preprocess new data
     # Replace 'new_data.csv' with the path to your new data file
     
-    #to input filename from fastapi replace the beginning of the function with this:
-    # def predict(filename):
-    # directory = "<insert base directory where the files are stored>"
-    # csv = directory + filename
-    # new_data = pd.read_csv(csv)
-    
-    
-    home_dir = 'D:\idk.py\preprocessing_data\\'
+    home_dir = 'D:\FarmE\preprocessing_data\\'
     filepath = home_dir + request_data.csv 
     new_data = pd.read_csv(filepath)
     preprocessed_data, scaler = preprocess_data(new_data)
@@ -112,7 +105,7 @@ def predict(request_data:CSVRead):
     # Optionally, save to a CSV file
     new_data.to_csv('predictions_output.csv', index=False)
     
-    root_dir = 'D:\idk.py\\'
+    root_dir = 'D:\FarmE\\'
     
     response = FileResponse(path=root_dir + 'predictions_output.csv')
     return response
