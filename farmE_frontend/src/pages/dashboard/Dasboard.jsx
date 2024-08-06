@@ -38,7 +38,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const panelMonitoring = ["100", "8", "3", "6", "250"];
+const panelMonitoring = ["40", "14", "50", "34", "8.23"];
 
 const panelData = [
   {

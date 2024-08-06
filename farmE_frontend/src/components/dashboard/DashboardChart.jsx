@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Button, Card, Box, Select, MenuItem } from "@mui/material";
+import { useState } from "react";
 
 import {
   LineChart,
@@ -13,6 +14,7 @@ import {
 
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import BoltIcon from "@mui/icons-material/Bolt";
+import ReportModal from "./ReportModal";
 
 const energyData = [
   { name: "", produced: 0, consumed: 0 },
@@ -26,6 +28,12 @@ const energyData = [
 ];
 
 export default function DashboardChart({ callback }) {
+  const [open, setOpen] = useState(false);
+
+  const toggleModal = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
       <Card
@@ -104,6 +112,7 @@ export default function DashboardChart({ callback }) {
             </Select>
             <Button
               variant="contained"
+              onClick={toggleModal}
               sx={{
                 backgroundColor: "#000",
                 padding: "0.5rem 2rem",
@@ -208,6 +217,7 @@ export default function DashboardChart({ callback }) {
           </Box>
         </Box>
       </Card>
+      <ReportModal open={open} onClose={toggleModal} />
     </>
   );
 }

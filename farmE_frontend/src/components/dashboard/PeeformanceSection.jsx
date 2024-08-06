@@ -33,7 +33,7 @@ export default function PerformanceSection() {
                 fontSize: "40px",
               }}
             >
-              462
+              410
               <span
                 style={{
                   marginLeft: "1rem",
@@ -60,7 +60,7 @@ export default function PerformanceSection() {
                 fontWeight: "bold",
               }}
             >
-              87%
+              88%
             </Typography>
           </div>
         </div>
