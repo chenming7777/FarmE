@@ -26,6 +26,16 @@ const energyData = [
 ];
 
 export default function DashboardChart({ callback }) {
+
+  const downloadReport = () => {
+    const link = document.createElement('a');
+    link.href = '/dashboard/daily_energy_generation_report_2019-11-20 1.pdf';
+    link.download = 'report.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <>
       <Card
@@ -109,6 +119,7 @@ export default function DashboardChart({ callback }) {
                 padding: "0.5rem 2rem",
                 borderRadius: 25,
               }}
+              onClick={downloadReport}
             >
               Download Report
             </Button>
