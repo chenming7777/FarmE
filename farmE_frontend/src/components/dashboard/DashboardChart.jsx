@@ -121,13 +121,13 @@ export default function DashboardChart({ callback }) {
             </Select>
             <Button
               variant="contained"
-              // onClick={toggleModal}
+              onClick={toggleModal}
               sx={{
                 backgroundColor: "#000",
                 padding: "0.5rem 2rem",
                 borderRadius: 25,
               }}
-              onClick={downloadReport}
+              // onClick={downloadReport}
             >
               Download Report
             </Button>
@@ -227,7 +227,11 @@ export default function DashboardChart({ callback }) {
           </Box>
         </Box>
       </Card>
-      <ReportModal open={open} onClose={toggleModal} />
+      <ReportModal
+        open={open}
+        onClose={toggleModal}
+        onDownloadReport={downloadReport}
+      />
     </>
   );
 }

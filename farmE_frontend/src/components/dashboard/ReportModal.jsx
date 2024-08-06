@@ -13,7 +13,7 @@ import { Close, CheckCircle, Info } from "@mui/icons-material";
 
 import GppGoodIcon from "@mui/icons-material/GppGood";
 
-const ReportModal = ({ open, onClose }) => {
+const ReportModal = ({ open, onClose, onDownloadReport }) => {
   return (
     <Dialog
       open={open}
@@ -79,6 +79,7 @@ const ReportModal = ({ open, onClose }) => {
               padding: "0.5rem 2rem",
               borderRadius: 25,
             }}
+            onClick={onDownloadReport}
           >
             Download Report
           </Button>
