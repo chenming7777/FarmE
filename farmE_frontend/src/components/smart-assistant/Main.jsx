@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const SmartAssistantMain = () => {
   const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
   const [fileNames, setFileNames] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -19,6 +20,10 @@ const SmartAssistantMain = () => {
 
   const handleImageClick = () => {
     fileInputRef.current.click();
+  };
+
+  const handleImageClick2 = () => {
+    imageInputRef.current.click();
   };
 
   const handleFileChange = (event) => {
@@ -235,47 +240,38 @@ const SmartAssistantMain = () => {
         </div>
         <div className="margin-top-30" style={{ marginTop: "30%" }}>
           {isTyping && <div className="loading">Loading...</div>}
-          {fileNames.length > 0 ||
-            (imageFiles.length > 0 && (
-              <div className="file-preview">
-                {fileNames.map((file, index) => (
-                  <div key={index} className="file-item">
-                    <span>{file.name}</span>
-                    <button onClick={() => removeFile(index, "file")}>
-                      Remove
-                    </button>
-                  </div>
-                ))}
-                {imageFiles.map((image, imgIndex) => (
-                  <div className="file-item">
-                    <div
-                      key={imgIndex}
-                      style={{
-                        padding: "8px",
-                        marginLeft: "auto",
-                      }}
-                    >
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt="Upload"
-                        style={{ width: "100px", marginRight: "5px" }}
-                      />
-                    </div>
-                    <button onClick={() => removeFile(imgIndex, "image")}>
-                      Remove
-                    </button>
-                  </div>
-                ))}
-                {/* {imageFiles.map((file, index) => (
+          {fileNames.length > 0 && (
+            <div className="file-preview">
+              {fileNames.map((file, index) => (
                 <div key={index} className="file-item">
                   <span>{file.name}</span>
-                  <button onClick={() => removeFile(index, "image")}>
+                  <button onClick={() => removeFile(index, "file")}>
                     Remove
                   </button>
                 </div>
-              ))} */}
+              ))}
+            </div>
+          )}
+          {imageFiles.map((image, imgIndex) => (
+            <div className="file-item">
+              <div
+                key={imgIndex}
+                style={{
+                  padding: "8px",
+                  marginLeft: "auto",
+                }}
+              >
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Upload"
+                  style={{ width: "100px", marginRight: "5px" }}
+                />
               </div>
-            ))}
+              <button onClick={() => removeFile(imgIndex, "image")}>
+                Remove
+              </button>
+            </div>
+          ))}
           <div className="search-box">
             <input
               type="text"
@@ -296,7 +292,18 @@ const SmartAssistantMain = () => {
                 style={{ display: "none" }}
                 onChange={handleFileChange}
               />
-              <img src={assets.gallery_icon} alt="Gallery" />
+              <img
+                src={assets.gallery_icon}
+                alt="Gallery"
+                onClick={handleImageClick2}
+                style={{ cursor: "pointer" }}
+              />
+              <input
+                type="file"
+                ref={imageInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
               <img src={assets.mic_icon} alt="Microphone" />
               <img
                 src={assets.send_icon}
