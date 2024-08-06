@@ -12,9 +12,17 @@ import {
   MenuItem,
 } from "@mui/material";
 
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import BlockchainEnergyDataModal from "../../components/dashboard/BlockchainModal";
+
+import DashboardChart from "../../components/dashboard/DashboardChart";
+import WeatherCondition from "../../components/dashboard/WeatherCondition";
+import PerformanceSection from "../../components/dashboard/PeeformanceSection";
+
+// Make an array of 12 objects, with each object representing a panel and the url points to the image
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -30,11 +38,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-import DashboardChart from "../../components/dashboard/DashboardChart";
-import WeatherCondition from "../../components/dashboard/WeatherCondition";
-import PerformanceSection from "../../components/dashboard/PeeformanceSection";
-
-// Make an array of 12 objects, with each object representing a panel and the url points to the image
+const panelMonitoring = ["40", "14", "50", "34", "8.23"];
 
 const panelData = [
   {
@@ -88,6 +92,12 @@ const panelData = [
 ];
 
 const Dashboard = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleModal = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
       <div
@@ -206,13 +216,13 @@ const Dashboard = () => {
               {/* Placeholder for panel grid image */}
               <Box sx={{ mb: 2 }}>
                 <Grid container spacing={0}>
-                  {[...Array(24)].map((_, index) => {
+                  {[...Array(6)].map((_, index) => {
                     let active = true;
-                    if (index % 3 === 0) {
+                    if (index == 5) {
                       active = false;
                     }
                     return (
-                      <Grid item xs={12} sm={6} md={2} key={index}>
+                      <Grid item xs={12} sm={6} md={4} key={index}>
                         <HtmlTooltip
                           title={
                             <>
@@ -255,7 +265,7 @@ const Dashboard = () => {
                   "Total Yield",
                   "Consumption",
                   "Total Charging",
-                  "Total Energy",
+                  "Real Time Usage",
                 ].map((item, index) => (
                   <Grid item xs={12} sm={2.4} key={index}>
                     <Typography
@@ -273,7 +283,7 @@ const Dashboard = () => {
                         fontWeight: 800,
                       }}
                     >
-                      0 kWh
+                      {panelMonitoring[index]} kWh
                     </Typography>
                   </Grid>
                 ))}
@@ -289,7 +299,7 @@ const Dashboard = () => {
 
           {/* Chart Section */}
           <div>
-            <DashboardChart />
+            <DashboardChart callback={toggleModal} />
           </div>
         </div>
 
@@ -317,6 +327,8 @@ const Dashboard = () => {
           {/* End of Performance Section */}
         </div>
       </div>
+
+      <BlockchainEnergyDataModal open={open} onClose={toggleModal} />
     </>
   );
 };

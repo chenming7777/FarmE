@@ -83,7 +83,7 @@ export default function WeatherCondition() {
             Today
           </Typography>
           <img
-            src={`src/assets/dashboard/rainy.png`}
+            src={`src/assets/dashboard/sunny-weather.png`}
             style={{
               width: "60px",
               height: "60px",
@@ -98,7 +98,7 @@ export default function WeatherCondition() {
               fontWeight: "bold",
             }}
           >
-            20°C
+            29.73°C
           </Typography>
           <Typography
             sx={{
@@ -107,7 +107,7 @@ export default function WeatherCondition() {
               fontWeight: "bold",
             }}
           >
-            Rainy Storm Cloud
+            Sunny Day
           </Typography>
         </div>
         <div
@@ -261,7 +261,7 @@ export default function WeatherCondition() {
                 fontSize: "20px",
               }}
             >
-              0 W/m<sup>2</sup>
+              1041 W/m<sup>2</sup>
             </Typography>
           </div>
           <div>

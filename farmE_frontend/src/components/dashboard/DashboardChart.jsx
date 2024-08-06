@@ -1,5 +1,6 @@
 import Typography from "@mui/material/Typography";
 import { Button, Card, Box, Select, MenuItem } from "@mui/material";
+import { useState } from "react";
 
 import {
   LineChart,
@@ -11,20 +12,37 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import GppGoodIcon from "@mui/icons-material/GppGood";
 import BoltIcon from "@mui/icons-material/Bolt";
+import ReportModal from "./ReportModal";
 
 const energyData = [
   { name: "", produced: 0, consumed: 0 },
-  { name: "March", produced: 180, consumed: 220 },
-  { name: "April", produced: 200, consumed: 180 },
-  { name: "May", produced: 250, consumed: 230 },
-  { name: "June", produced: 280, consumed: 260 },
-  { name: "July", produced: 100, consumed: 50 },
-  { name: "August", produced: 280, consumed: 200 },
+  { name: "October", produced: 180, consumed: 220 },
+  { name: "November", produced: 200, consumed: 180 },
+  { name: "December", produced: 250, consumed: 230 },
+  { name: "January", produced: 280, consumed: 260 },
+  { name: "February", produced: 100, consumed: 50 },
+  // { name: "August", produced: 280, consumed: 200 },
   { name: "", produced: 100, consumed: 150 },
 ];
 
-export default function DashboardChart() {
+export default function DashboardChart({ callback }) {
+  const [open, setOpen] = useState(false);
+
+  const toggleModal = () => {
+    setOpen(!open);
+  };
+
+  const downloadReport = () => {
+    const link = document.createElement("a");
+    link.href = "/dashboard/daily_energy_generation_report_2019-11-20 1.pdf";
+    link.download = "report.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <Card
@@ -52,11 +70,29 @@ export default function DashboardChart() {
           </Typography>
           <Box>
             <Button
+              onClick={callback}
               variant="outlined"
               sx={{
                 mr: 2,
                 py: 1,
-                px: 2,
+                px: 1,
+                color: "#000",
+                border: "1px solid #000",
+                fontWeight: "bold",
+              }}
+            >
+              <GppGoodIcon
+                sx={{
+                  mr: 1,
+                }}
+              />
+              Blockchain Verified
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                mr: 2,
+                py: 1,
                 color: "#000",
                 border: "1px solid #000",
                 fontWeight: "bold",
@@ -64,7 +100,7 @@ export default function DashboardChart() {
             >
               <BoltIcon
                 sx={{
-                  mr: 2,
+                  mr: 1,
                 }}
               />
               300 kWh
@@ -73,9 +109,9 @@ export default function DashboardChart() {
               size="small"
               defaultValue="monthly"
               sx={{
-                height: "100%",
+                // height: "100%",
                 mr: 2,
-                px: 3,
+                px: 1,
                 border: "1px solid #000",
                 fontWeight: "bold",
               }}
@@ -85,11 +121,13 @@ export default function DashboardChart() {
             </Select>
             <Button
               variant="contained"
+              onClick={toggleModal}
               sx={{
                 backgroundColor: "#000",
                 padding: "0.5rem 2rem",
                 borderRadius: 25,
               }}
+              // onClick={downloadReport}
             >
               Download Report
             </Button>
@@ -189,6 +227,11 @@ export default function DashboardChart() {
           </Box>
         </Box>
       </Card>
+      <ReportModal
+        open={open}
+        onClose={toggleModal}
+        onDownloadReport={downloadReport}
+      />
     </>
   );
 }
