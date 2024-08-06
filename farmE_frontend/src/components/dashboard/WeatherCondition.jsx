@@ -83,7 +83,7 @@ export default function WeatherCondition() {
             Today
           </Typography>
           <img
-            src={`src/assets/dashboard/rainy.png`}
+            src={`src/assets/dashboard/cloudy.png`}
             style={{
               width: "60px",
               height: "60px",
@@ -134,7 +134,7 @@ export default function WeatherCondition() {
             28 Jul 2024
           </Typography>
           <img
-            src={`src/assets/dashboard/cloudy.png`}
+            src={`src/assets/dashboard/rainy.png`}
             style={{
               width: "60px",
               height: "60px",

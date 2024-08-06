@@ -18,21 +18,21 @@ import CloseIcon from "@mui/icons-material/Close";
 
 const mockData = [
   {
-    title: "Notification 1",
-    date: "March 10, 2024",
+    title: "Solar Panel 6 is not working regularly",
+    date: "August 5, 2024",
   },
   {
-    title: "Notification 2",
-    date: "March 10, 2024",
+    title: "Heavy rain expected in the next 24 hours",
+    date: "August 5, 2024",
   },
-  {
-    title: "Notification 3",
-    date: "March 10, 2024",
-  },
-  {
-    title: "Notification 4",
-    date: "March 10, 2024",
-  },
+  // {
+  //   title: "Notification 3",
+  //   date: "March 10, 2024",
+  // },
+  // {
+  //   title: "Notification 4",
+  //   date: "March 10, 2024",
+  // },
 ];
 
 export default function Notification() {
