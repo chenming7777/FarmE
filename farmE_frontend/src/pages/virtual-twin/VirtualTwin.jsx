@@ -378,7 +378,7 @@ const DigitalTwin = () => {
           
           <div>
             <div className="info-wrapper">
-              <div className="subtitle">Alternate power (W) {isSimulation == false ? "⚠️" : null}</div>
+              <div className="subtitle">Alternate power (W) {isSimulation == false && selectedPanel.name == "solar panel 6" ? "⚠️" : null}</div>
               {(isSimulation == true) ?  
               <div className="info"> {selectedPanel && selectedPanel.name ? currentData["P_AC_Group" + selectedPanel.name.split(" ")[2]] : "No panel selected"} </div>
               :<div className="info"> {selectedPanel && selectedPanel.name ? currentData["P_AC_Group" + selectedPanel.name.split(" ")[2]] : "No panel selected"} </div>}
