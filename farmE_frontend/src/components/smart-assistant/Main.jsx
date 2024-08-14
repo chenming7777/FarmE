@@ -91,9 +91,9 @@ const SmartAssistantMain = () => {
     
         console.log('Sending request to:', 'http://localhost:8000/process_input/');
         const response = await axios.post('http://localhost:8000/process_input/', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // }
         });
     
         const botResponse = {
