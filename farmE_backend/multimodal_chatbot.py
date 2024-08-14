@@ -9,12 +9,6 @@ import os
 from dotenv import load_dotenv
 import getpass
 
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import JSONResponse
-import uvicorn
-
-app = FastAPI()
-
 # Load environment variables
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -50,21 +44,22 @@ prompt = PromptTemplate(
     template=template
 )
 
-def process_input(user_input, image_data=None):
+def process_input(user_input, image_data_list=None):
     # Get the chat history
     chat_history = shared_memory.load_memory_variables({})['history']
     
     # Generate the full prompt using the template
-    full_prompt = prompt.format(input=user_input if user_input else "Analyze the provided image", chat_history=chat_history)
+    full_prompt = prompt.format(input=user_input if user_input else "Analyze the provided images", chat_history=chat_history)
     
     # Prepare the input for the model
     model_input = [full_prompt]
     
     # If image data is provided, add it to the input
-    if image_data:
+    if image_data_list:
         try:
-            image = Image.open(io.BytesIO(base64.b64decode(image_data)))
-            model_input.append(image)
+            for image_data in image_data_list:
+                image = Image.open(io.BytesIO(base64.b64decode(image_data)))
+                model_input.append(image)
         except Exception as e:
             return {"error": f"Error processing image: {str(e)}"}
     
@@ -81,10 +76,10 @@ def main(json_input):
         # Parse the JSON input
         data = json.loads(json_input)
         user_input = data.get("text_input")
-        image_data = data.get("image")
+        image_data_list = data.get("images", [])
         
         # Process the input
-        result = process_input(user_input, image_data)
+        result = process_input(user_input, image_data_list)
         
         # Return the result as JSON
         return json.dumps(result)
@@ -93,93 +88,36 @@ def main(json_input):
     except Exception as e:
         return json.dumps({"error": str(e)})
 
-# This model can aceept image, text and both image and text.
+# This model can accept multiple images, text, or both images and text.
 # It will accept the input in the form of JSON and return the response in the form of JSON.
 # format is as follows:
-# ({"text_input": "Analyze the efficiency graph.",
-# "image": encoded_image}), jpg and png is fine
-# Example usage
-if __name__ == "__main__":
-    # Text-only input
-    text_only_input = json.dumps({
-        "text_input": "What are the best practices for maintaining solar panels in an agricultural setting?"
-    })
-    print("Text-only response:", main(text_only_input))
-    
-    # Image-only input (assuming you have a base64 encoded image)
-    with open("./gemini_model/irradiance_11_20.png", "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-    image_only_input = json.dumps({
-        "image": encoded_image
-    })
-    print("Image-only response:", main(image_only_input))
-    
-    # Text and image input
-    with open("./gemini_model/irradiance_11_27.png", "rb") as image_file:
-        encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-    text_and_image_input = json.dumps({
-        "text_input": "Analyze the efficiency graph.",
-        "image": encoded_image
-    })
-    print("Text and image response:", main(text_and_image_input))
-    
-@app.post("/process_text/")
-async def process_text(text_input: str = Form(...)):
-    try:
-        # Prepare the JSON input for the main function without image data
-        json_input = json.dumps({
-            "text_input": text_input
-        })
-        
-        # Process the input using the main function
-        response = main(json_input)
-        
-        # Return the result as a JSON response
-        return JSONResponse(status_code=200, content=json.loads(response))
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
-    
-@app.post("/process_image/")
-async def process_image(image: UploadFile = File(...)):
-    try:
-        # Read the image file and encode it to base64
-        image_content = await image.read()
-        encoded_image = base64.b64encode(image_content).decode('utf-8')
+# {"text_input": "Analyze the efficiency graphs.",
+#  "images": [encoded_image1, encoded_image2, ...]}
+# jpg and png formats are supported for images
 
-        # Prepare the JSON input for the main function without text input
-        json_input = json.dumps({
-            "image": encoded_image
-        })
-        
-        # Process the input using the main function
-        response = main(json_input)
-        
-        # Return the result as a JSON response
-        return JSONResponse(status_code=200, content=json.loads(response))
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
-
+# if __name__ == "__main__":
+#     # Text-only input
+#     text_only_input = json.dumps({
+#         "text_input": "What are the best practices for maintaining solar panels in an agricultural setting?"
+#     })
+#     print("Text-only response:", main(text_only_input))
     
-@app.post("/process_input/")
-async def processing_input(text_input: str = Form(...), image: UploadFile = File(...)):
-    try:
-        # Read the image file and encode it to base64
-        image_content = await image.read()
-        encoded_image = base64.b64encode(image_content).decode('utf-8')
-
-        # Prepare the JSON input for the main function
-        json_input = json.dumps({
-            "text_input": text_input,
-            "image": encoded_image
-        })
-        
-        # Process the input using the main function
-        response = main(json_input)
-        
-        # Return the result as a JSON response
-        return JSONResponse(status_code=200, content=json.loads(response))
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
+#     # Single image input
+#     with open("./farmE_backend/test.png", "rb") as image_file:
+#         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+#     image_only_input = json.dumps({
+#         "images": [encoded_image]
+#     })
+#     print("Single image response:", main(image_only_input))
     
-if __name__ == "__main__":
-    uvicorn.run (app, port = 5000, host = "0.0.0.0")
+#     # Text and multiple images input
+#     with open("./farmE_backend/image1.png", "rb") as image_file1, \
+#          open("./farmE_backend/image2.png", "rb") as image_file2:
+#         encoded_image1 = base64.b64encode(image_file1.read()).decode('utf-8')
+#         encoded_image2 = base64.b64encode(image_file2.read()).decode('utf-8')
+    
+#     text_and_images_input = json.dumps({
+#         "text_input": "Analyze the efficiency graphs.",
+#         "images": [encoded_image1, encoded_image2]
+#     })
+#     print("Text and multiple images response:", main(text_and_images_input))

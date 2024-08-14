@@ -1,6 +1,7 @@
 import "./Main.css";
 import { assets } from "../../assets/smart-assistant/assets";
 import React, { useEffect, useRef, useState } from "react";
+import axios from 'axios';
 
 const SmartAssistantMain = () => {
   const fileInputRef = useRef(null);
@@ -30,15 +31,17 @@ const SmartAssistantMain = () => {
     const files = Array.from(event.target.files);
     const newFiles = [];
     const newImages = [];
-
+  
     files.forEach((file) => {
       if (file.type.startsWith("image/")) {
         newImages.push(file);
-      } else {
+      } else if (file.type === "application/pdf") {
         newFiles.push(file);
+      } else {
+        console.warn(`Unsupported file type: ${file.type}`);
       }
     });
-
+  
     setFileNames((prevFileNames) => [...prevFileNames, ...newFiles]);
     setImageFiles((prevImageFiles) => [...prevImageFiles, ...newImages]);
   };
@@ -47,7 +50,7 @@ const SmartAssistantMain = () => {
     setInputValue(event.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     setIsTyping(true);
     if (
       inputValue.trim() !== "" ||
@@ -62,72 +65,63 @@ const SmartAssistantMain = () => {
       };
       setMessages([...messages, userMessage]);
       setInputValue("");
-      setFileNames([]);
-      setImageFiles([]);
 
-      // Hardcoded response
-      if (inputValue.toLowerCase().includes("summary")) {
-        setTimeout(() => {
-          const botResponse = {
+      try {
+        const formData = new FormData();
+        formData.append('text_input', inputValue);
+    
+        // Handle PDF files
+        fileNames.forEach(file => {
+            if (file.type === 'application/pdf') {
+                formData.append('pdfs', file);
+            }
+        });
+    
+        // Handle image files
+        imageFiles.forEach(image => {
+            if (image.type.startsWith('image/')) {
+                formData.append('images', image);
+            }
+        });
+    
+        console.log('FormData contents:');
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+    
+        console.log('Sending request to:', 'http://localhost:8000/process_input/');
+        const response = await axios.post('http://localhost:8000/process_input/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    
+        const botResponse = {
             type: "bot",
-            content:
-              "The daily energy generation report for November 20, 2019, shows that the energy generation system produced a total of 62.30 kWh of AC energy and 63.38 kWh of DC energy, with a conversion efficiency rate of 98.29%. The peak hour of energy generation occurred at 11:00:00, producing 8.28 kWh. The day was characterized by clear skies, a high average temperature of 29.73°C, and an average wind speed of 5.75 m/s. Air quality was excellent with low particulate levels. The report also includes environmental impact data, showing that the clean energy generated on this day contributed to improved air quality by reducing greenhouse gas emissions, promoting a healthier environment. It also provides recommendations for exploring increased energy storage capacity to leverage peak generation hours more effectively and enhance energy output during periods of lower generation.",
-          };
-          setMessages((prev) => [...prev, botResponse]);
-          setIsTyping(false);
-        }, 2000);
-      } else if (inputValue.toLowerCase().includes("graph")) {
-        setTimeout(() => {
-          const botResponse = {
+            content: response.data.response
+        };
+        setMessages(prev => [...prev, botResponse]);
+    } catch (error) {
+        console.error('Error in handleSendMessage:', error);
+        if (error.response) {
+            console.error('Error response:', error.response.data);
+            console.error('Error status:', error.response.status);
+            console.error('Error headers:', error.response.headers);
+        } else if (error.request) {
+            console.error('Error request:', error.request);
+        } else {
+            console.error('Error message:', error.message);
+        }
+        const errorResponse = {
             type: "bot",
-            content: `
-            <div>
-              <p>These graphs show the irradiance levels, or the amount of solar radiation reaching your solar panels, for November 20th and 27th, 2019. Let's analyze them:</p>
-              <h2>Graph 1: November 20th, 2019</h2>
-              <ul>
-                <li><b>Peak Irradiance:</b> The graph shows a peak irradiance level of around 1,000 W/m², which indicates a clear day with high sunlight intensity.</li>
-                <li><b>Consistent Production:</b> The irradiance levels remain relatively consistent throughout the day, suggesting a stable solar energy output with minimal cloud cover.</li>
-                <li><b>Evening Drop-Off:</b> The noticeable drop in irradiance towards the end of the day indicates the sun setting and the reduction of available solar radiation.</li>
-              </ul>
-              <h2>Graph 2: November 27th, 2019</h2>
-              <ul>
-                <li><b>Lower Peak Irradiance:</b> The peak irradiance is significantly lower on this day, reaching around 400 W/m². This suggests a less sunny day with possible cloud cover.</li>
-                <li><b>Variability:</b> You can see greater fluctuations in irradiance throughout the day, indicating intermittent cloud cover affecting the solar energy production.</li>
-                <li><b>Sharp Drops:</b> The sharp drops in irradiance throughout the day point to periods of more significant cloud coverage or other weather events that block the sun's rays.</li>
-              </ul>
-              <h2>Implications for Agrivoltaics:</h2>
-              <ul>
-                <li><b>Crop Selection:</b> The difference in irradiance levels between these two days highlights the importance of choosing crops that can tolerate both higher and lower light levels. Crops that thrive in partial shade would be better suited for this location, as they could handle the variability in irradiance.</li>
-                <li><b>Water Management:</b> Periods of higher irradiance will increase the need for irrigation to ensure crops don't dry out. The fluctuation in irradiance might require adjusting irrigation schedules to ensure optimal water availability for the chosen crops.</li>
-                <li><b>Energy Production:</b> The variation in irradiance will directly impact your solar panel energy production. On days like November 27th, the energy generated will be lower than days like November 20th. This is important to consider for energy storage or grid connections to ensure you have a consistent energy supply.</li>
-              </ul>
-              <h2>Next Steps:</h2>
-              <ul>
-                <li><b>Long-Term Data:</b> It's crucial to analyze irradiance data over a longer period, including different seasons, to understand the overall pattern of solar radiation in your region.</li>
-                <li><b>Weather Forecasting:</b> Utilize weather forecasts to anticipate changes in irradiance and make adjustments to crop management practices accordingly.</li>
-                <li><b>Agrivoltaic System Design:</b> Consider the potential impact of varying irradiance levels on the design of your agrivoltaic system, ensuring sufficient shading for crops and maximizing energy production.</li>
-              </ul>
-              <p>By carefully analyzing these graphs and considering the long-term irradiance trends, you can optimize your agrivoltaic system for both energy production and agricultural yields.</p>
-            </div>
-          `,
-          };
-          setMessages((prev) => [...prev, botResponse]);
-          setIsTyping(false);
-        }, 2000);
-      } else {
-        // Default response for other inputs
-        setTimeout(() => {
-          setMessages((prev) => [
-            ...prev,
-            {
-              type: "bot",
-              content:
-                "I'm sorry, I don't have specific information for that query. How else can I assist you?",
-            },
-          ]);
-          setIsTyping(false);
-        }, 1000);
-      }
+            content: `Error: ${error.response ? JSON.stringify(error.response.data) : error.message}`
+        };
+        setMessages(prev => [...prev, errorResponse]);
+    } finally {
+        setIsTyping(false);
+        setFileNames([]);
+        setImageFiles([]);
+    }
     }
   };
 
@@ -152,17 +146,17 @@ const SmartAssistantMain = () => {
         >
           <div className="greet">
             <p>
-              <span>Hello,I'm FarmAI</span>
+              <span>Hello, I'm your farmAI</span>
             </p>
             <p>How can I help you today?</p>
           </div>
           <div className="cards">
             <div className="card">
-              <p>Where should i plan my to build an agrivoltaic farm?</p>
+              <p>Where should I plan to build an agrivoltaic farm?</p>
               <img src={assets.compass_icon} alt="" />
             </div>
             <div className="card">
-              <p>What plant should i plant with the solar panel</p>
+              <p>What plant should I plant with the solar panel?</p>
               <img src={assets.bulb_icon} alt="" />
             </div>
             <div className="card">
@@ -187,7 +181,7 @@ const SmartAssistantMain = () => {
                     <p>
                       {message.files.map((file, fileIndex) => (
                         <div
-                          key={index}
+                          key={fileIndex}
                           style={{
                             padding: "8px",
                             marginLeft: "auto",
@@ -253,9 +247,8 @@ const SmartAssistantMain = () => {
             </div>
           )}
           {imageFiles.map((image, imgIndex) => (
-            <div className="file-item">
+            <div key={imgIndex} className="file-item">
               <div
-                key={imgIndex}
                 style={{
                   padding: "8px",
                   marginLeft: "auto",
