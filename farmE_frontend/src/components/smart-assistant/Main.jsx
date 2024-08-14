@@ -152,7 +152,7 @@ const SmartAssistantMain = () => {
         >
           <div className="greet">
             <p>
-              <span>Hello,Im you farmAI</span>
+              <span>Hello,I'm FarmAI</span>
             </p>
             <p>How can I help you today?</p>
           </div>

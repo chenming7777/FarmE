@@ -20,10 +20,10 @@ import { Close, CheckCircle, Info } from "@mui/icons-material";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 
 const BlockchainEnergyDataModal = ({ open, onClose }) => {
-  const dates = Array(15).fill("2024-08-01");
+  const dates = Array(15).fill("2019-11-");
 
   const electricalData = {
-    timestamp: "2024-07-18 12:00:00",
+    timestamp: "2019-11-18 12:00:00",
     acPower: 6500,
     acCurrent: 28,
     dcCurrent: 30,
@@ -68,7 +68,7 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
               </Typography>
               {dates.map((date, index) => (
                 <Typography key={index} variant="body2" sx={{ p: 1 }}>
-                  {date}
+                  {`${date}${index + 1}`}
                 </Typography>
               ))}
             </Paper>
@@ -91,7 +91,7 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
             </Box>
 
             <Typography variant="h6" gutterBottom>
-              Electrical Data (July 18, 2024 - 12:00 PM)
+              Electrical Data (November 18, 2019 - 12:00 PM)
             </Typography>
             <TableContainer component={Paper} variant="outlined" sx={{ mb: 2 }}>
               <Table size="small">
