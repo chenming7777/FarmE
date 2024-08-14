@@ -65,63 +65,63 @@ const SmartAssistantMain = () => {
       };
       setMessages([...messages, userMessage]);
       setInputValue("");
-
+  
       try {
         const formData = new FormData();
         formData.append('text_input', inputValue);
-    
+  
         // Handle PDF files
-        fileNames.forEach(file => {
-            if (file.type === 'application/pdf') {
-                formData.append('pdfs', file);
-            }
+        fileNames.forEach((file, index) => {
+          if (file.type === 'application/pdf') {
+            formData.append(`pdfs`, file);
+          }
         });
-    
+  
         // Handle image files
-        imageFiles.forEach(image => {
-            if (image.type.startsWith('image/')) {
-                formData.append('images', image);
-            }
+        imageFiles.forEach((image, index) => {
+          if (image.type.startsWith('image/')) {
+            formData.append(`images`, image);
+          }
         });
-    
+  
         console.log('FormData contents:');
         for (let pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
+          console.log(pair[0] + ': ' + pair[1]);
         }
-    
+  
         console.log('Sending request to:', 'http://localhost:8000/process_input/');
         const response = await axios.post('http://localhost:8000/process_input/', formData, {
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // }
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         });
-    
+  
         const botResponse = {
-            type: "bot",
-            content: response.data.response
+          type: "bot",
+          content: response.data.response
         };
         setMessages(prev => [...prev, botResponse]);
-    } catch (error) {
+      } catch (error) {
         console.error('Error in handleSendMessage:', error);
         if (error.response) {
-            console.error('Error response:', error.response.data);
-            console.error('Error status:', error.response.status);
-            console.error('Error headers:', error.response.headers);
+          console.error('Error response:', error.response.data);
+          console.error('Error status:', error.response.status);
+          console.error('Error headers:', error.response.headers);
         } else if (error.request) {
-            console.error('Error request:', error.request);
+          console.error('Error request:', error.request);
         } else {
-            console.error('Error message:', error.message);
+          console.error('Error message:', error.message);
         }
         const errorResponse = {
-            type: "bot",
-            content: `Error: ${error.response ? JSON.stringify(error.response.data) : error.message}`
+          type: "bot",
+          content: `Error: ${error.response ? JSON.stringify(error.response.data) : error.message}`
         };
         setMessages(prev => [...prev, errorResponse]);
-    } finally {
+      } finally {
         setIsTyping(false);
         setFileNames([]);
         setImageFiles([]);
-    }
+      }
     }
   };
 
