@@ -259,7 +259,7 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
                       display="flex"
                       alignItems="center"
                     >
-                      MerkleRoot: "a9ds10f0c44b88b111fb317f34bee11b2a1a595fc0d7fec9dd8d68f8c73e5c85
+                      MerkleRoot: a9ds10f0c44b88b111fb317f34bee11b2a1a595fc0d7fec9dd8d68f8c73e5c85
                       <IconButton size="small">
                         <CheckCircle fontSize="small" />
                       </IconButton>
