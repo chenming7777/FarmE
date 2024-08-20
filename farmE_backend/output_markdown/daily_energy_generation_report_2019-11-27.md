@@ -2,21 +2,21 @@
 
 # Weather Conditions
 
-|Sunlight Hours:|14|
+|Sunlight Hours|14|
 |---|---|
-|Average Temperature:|23.85°C|
-|Average Wind Speed:|5.27 m/s|
-|Most Frequent Wind Direction:|0°|
-|Total Rainfall:|30239.25 mm|
+|Average Temperature|23.85°C|
+|Average Wind Speed|5.27 m/s|
+|Most Frequent Wind Direction|0°|
+|Total Rainfall|30239.25 mm|
 
-# Air Quality Data:
+# Air Quality Data
 
-|Average PM1:|2.31 μg/m³|
+|Average PM1|2.31 μg/m³|
 |---|---|
-|Average PM2.5:|0.08 μg/m³|
-|Average PM4:|0.00 μg/m³|
-|Average PM10:|0.00 μg/m³|
-|Average Particulate Concentration:|0.45 particle/m³|
+|Average PM2.5|0.08 μg/m³|
+|Average PM4|0.00 μg/m³|
+|Average PM10|0.00 μg/m³|
+|Average Particulate Concentration|0.45 particle/m³|
 
 # Energy Generation Data
 
@@ -54,29 +54,25 @@ Peak hour: 2019-11-27 08:00:00: 3.64 kWh
 
 Environmental Impact
 
-Environmental Impact: The air quality data indicates excellent air quality with very low levels of PM1, PM2.5, PM4, PM10, and particulate matter concentration. This suggests that the energy generation system is contributing to a cleaner environment.
-
-CO2 Savings: 16.37 kg
+|Environmental Impact:|The system's generation of 21.60 kWh of energy on 2019-11-27 resulted in the avoidance of 16.37 kg of CO2 emissions. This reduction in greenhouse gas emissions contributes to mitigating climate change and improving air quality.|
+|---|---|
+|CO2 Savings:|16.37 kg|
 
 # Alerts and Notifications
 
-|Performance Alerts:|No information.|
+|Performance Alerts:|No information|
 |---|---|
-|Weather Warnings:|No information.|
+|Weather Warnings:|No information|
 
 # Summary and Recommendations
 
-Summary: On November 27, 2019, the system generated 21.60 kWh of AC energy and 22.02 kWh of DC energy, with a conversion efficiency rate of 98.10%. The peak hour was at 08:00 with 3.64 kWh generated. The day experienced 14 hours of sunlight and an average temperature of 23.85°C. However, the total rainfall of 30239.25 mm is an unusually high amount, and likely significantly impacted energy generation.
+Summary: The energy generation system produced 21.60 kWh of AC energy and 22.02 kWh of DC energy on 2019-11-27, with a conversion efficiency rate of 98.10%. The peak hour of generation occurred at 2019-11-27 08:00:00, generating 3.64 kWh. Air quality on this day was excellent, with very low levels of particulate matter, and the weather was characterized by a high average temperature and significant rainfall. However, there is no information available on system downtime, maintenance activities, energy consumption, on-site consumption, yesterday's energy generation, or historical energy generation data.
 
-Recommendations: The unusually high rainfall on November 27, 2019, may have significantly affected energy generation. It is recommended to investigate if the system's performance was impacted by the weather conditions and implement measures to mitigate such impacts in the future. Additionally, with the excellent air quality, the system is contributing positively to the environment, and further efforts to minimize environmental impact should be explored.
+Recommendations: To enhance energy generation efficiency, it is recommended to analyze the impact of rainfall on system performance. Although rainfall can affect energy generation, the high rainfall on 2019-11-27 did not appear to significantly hinder energy production. Further investigation into this discrepancy is needed. Additionally, gathering data on historical energy generation for this date and for previous days will allow for a comprehensive performance assessment and enable the identification of trends and potential areas for improvement.
 
-# Hourly Energy Generation (kWh)
+Hourly Energy Generation (kWh)3.53.02.52.01.51.00.50.0
 
-3.53.012.52.011.51.00.50.0
-
-# Hourly Temperature (°C)
-
-262524232221
+Hourly Temperature (°C)262524232221
 
 |Hourly Wind Speed (m/s)| | | | | | | | | |
 |---|---|---|---|---|---|---|---|---|---|
@@ -98,21 +94,28 @@ Recommendations: The unusually high rainfall on November 27, 2019, may have sign
 | | |68| |69| | | | | |
 | |11-27 00|11-27 03|11-27 5|11-27 09|11-27 12|11-27 15|11-27 18|11-27 21|11-28|
 
-| | |Hourly Rainfall (mm)| | | | | | | |
-|---|---|---|---|---|---|---|---|---|---|
-|4000| | | | | | | | | |
-|13000| | | | | | | | | |
-|12000| | | | | | | | | |
-|1000| | | | | | | | | |
-| |68| | | | | | | | |
-|11-27 00|11-27 03|11-27 06|11-27 09|Hour of Day|11-27 12|11-27 15|11-27 18|11-27 21|11-28 00|
-|Hourly Particulate Size (µm)| | | | | | | | | |
-|0.460| | | | | | | | | |
-|0.455| | | | | | | | | |
-|0.450| | | | | | | | | |
-|0.445| | | | | | | | | |
-|0.440| | | | | | | | | |
-|0.435| | | | | | | | | |
-|0.430| | | | | | | | | |
-|69| | |48|69| | | | | |
-|11-27|11-27|11-27 06|11-27 09|11-27 12|11-27 15|11-27 18|11-27 21|11-28|Hour of Day|
+Hourly Rainfall (mm)400030002000100068
+
+Hourly Particulate Size (µm)0.4600.4550.4500.4450.4400.4350.430694869
+
+Hour of Day
+11-27 00
+11-27 03
+11-27 06
+11-27 09
+11-27 12
+11-27 15
+11-27 18
+11-27 21
+11-28 00
+
+Hour of Day
+11-27
+11-27
+11-27 06
+11-27 09
+11-27 12
+11-27 15
+11-27 18
+11-27 21
+11-28

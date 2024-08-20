@@ -9,6 +9,25 @@ import os
 from dotenv import load_dotenv
 import getpass
 
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+import PyPDF2
+from io import BytesIO
+from typing import List, Optional
+
+app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Adjust this to match your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Load environment variables
 load_dotenv()
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
@@ -23,7 +42,7 @@ shared_memory = ConversationBufferMemory()
 
 # Create a template for the model
 template = """
-You are a solar energy expert designed to assist farmers in the agrivoltaics industry, which combines agriculture with renewable energy generation. 
+You are a solar energy expert designed to assist farmers in the agrivoltaics industry, which combines agriculture with renewable energy generation. You should only provide the plain text avoid using *, **, or any other markdown syntax\n\n
 Your primary responsibilities include:
     Analyzing Graphs: You are proficient in interpreting various types of data visualizations related to solar energy production, weather patterns, and agricultural yield. You can provide detailed explanations and insights based on these graphs to help farmers optimize their operations.
     Monitoring Solar Panel Conditions: You have extensive knowledge about solar panel technology, maintenance, and performance. You can assess the condition of solar panels, identify potential issues, and suggest appropriate maintenance or troubleshooting steps to ensure optimal energy generation.
@@ -44,42 +63,88 @@ prompt = PromptTemplate(
     template=template
 )
 
-def process_input(user_input, image_data_list=None):
-    # Get the chat history
-    chat_history = shared_memory.load_memory_variables({})['history']
-    
-    # Generate the full prompt using the template
-    full_prompt = prompt.format(input=user_input if user_input else "Analyze the provided images", chat_history=chat_history)
-    
-    # Prepare the input for the model
-    model_input = [full_prompt]
-    
-    # If image data is provided, add it to the input
-    if image_data_list:
-        try:
-            for image_data in image_data_list:
-                image = Image.open(io.BytesIO(base64.b64decode(image_data)))
-                model_input.append(image)
-        except Exception as e:
-            return {"error": f"Error processing image: {str(e)}"}
-    
-    # Generate content
-    response = model.generate_content(model_input)
-    
-    # Update the shared memory
-    shared_memory.save_context({"input": user_input if user_input else "Image analysis"}, {"output": response.text})
-    
-    return {"response": response.text}
+def extract_text_from_pdf(file_content):
+    try:
+        pdf_file = BytesIO(file_content)
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+        text = ""
+        for page in pdf_reader.pages:
+            text += page.extract_text()
+        return text
+    except Exception as e:
+        print(f"Error extracting text from PDF: {str(e)}")
+        return ""
+
+@app.post("/process_input/")
+async def processing_input(
+    text_input: Optional[str] = Form(None),
+    images: Optional[List[UploadFile]] = File(None),
+    pdfs: Optional[List[UploadFile]] = File(None)
+):
+    print(f"Received text_input: {text_input}")
+    print(f"Received {len(images) if images else 0} images")
+    print(f"Received {len(pdfs) if pdfs else 0} PDFs") 
+    try:
+        if images:
+            for image in images:
+                if not image.content_type.startswith('image/'):
+                    raise HTTPException(400, f"File {image.filename} is not a valid image.")
+        
+        if pdfs:
+            for pdf in pdfs:
+                if pdf.content_type != 'application/pdf':
+                    raise HTTPException(400, f"File {pdf.filename} is not a valid PDF.")
+        
+        json_input = {}
+
+        if text_input:
+            json_input["text_input"] = text_input
+
+        if images:
+            encoded_images = []
+            for image in images:
+                image_content = await image.read()
+                encoded_image = base64.b64encode(image_content).decode('utf-8')
+                encoded_images.append(encoded_image)
+            json_input["images"] = encoded_images
+
+        if pdfs:
+            pdf_texts = []
+            for pdf in pdfs:
+                pdf_content = await pdf.read()
+                pdf_text = extract_text_from_pdf(pdf_content)
+                pdf_texts.append(pdf_text)
+
+            combined_pdf_text = "\n\n".join([f"PDF {i+1} Content:\n{text}" for i, text in enumerate(pdf_texts)])
+
+            if "text_input" in json_input:
+                json_input["text_input"] += f"\n\n{combined_pdf_text}"
+            else:
+                json_input["text_input"] = combined_pdf_text
+
+        if not json_input:
+            return JSONResponse(status_code=400, content={"error": "No input provided. Please provide at least one of: text input, images, or PDFs."})
+
+        # Process the input using the main function
+        response = main(json.dumps(json_input))
+
+        # Return the result as a JSON response
+        return JSONResponse(status_code=200, content=json.loads(response))
+    except Exception as e:
+        print(f"Error in processing_input: {str(e)}")
+        import traceback
+        print(traceback.format_exc())
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 def main(json_input):
     try:
         # Parse the JSON input
         data = json.loads(json_input)
-        user_input = data.get("text_input")
-        image_data_list = data.get("images", [])
+        user_input = data.get("text_input", "")
+        image_data = data.get("images", [])
         
         # Process the input
-        result = process_input(user_input, image_data_list)
+        result = process_input(user_input, image_data)
         
         # Return the result as JSON
         return json.dumps(result)
@@ -88,36 +153,36 @@ def main(json_input):
     except Exception as e:
         return json.dumps({"error": str(e)})
 
-# This model can accept multiple images, text, or both images and text.
-# It will accept the input in the form of JSON and return the response in the form of JSON.
-# format is as follows:
-# {"text_input": "Analyze the efficiency graphs.",
-#  "images": [encoded_image1, encoded_image2, ...]}
-# jpg and png formats are supported for images
+def process_input(user_input, image_data=None):
+    # Get the chat history
+    chat_history = shared_memory.load_memory_variables({})['history']
+    
+    # Generate the full prompt using the template
+    full_prompt = prompt.format(input=user_input if user_input else "Analyze the provided content", chat_history=chat_history)
+    
+    # Prepare the input for the model
+    model_input = [full_prompt]
+    
+    # If image data is provided, add it to the input
+    if image_data:
+        try:
+            for encoded_image in image_data:
+                image = Image.open(io.BytesIO(base64.b64decode(encoded_image)))
+                model_input.append(image)
+        except Exception as e:
+            return {"error": f"Error processing image: {str(e)}"}
+    
+    # Generate content
+    response = model.generate_content(model_input)
+    
+    # Update the shared memory
+    shared_memory.save_context({"input": user_input if user_input else "Content analysis"}, {"output": response.text})
+    
+    return {"response": response.text}
 
-# if __name__ == "__main__":
-#     # Text-only input
-#     text_only_input = json.dumps({
-#         "text_input": "What are the best practices for maintaining solar panels in an agricultural setting?"
-#     })
-#     print("Text-only response:", main(text_only_input))
-    
-#     # Single image input
-#     with open("./farmE_backend/test.png", "rb") as image_file:
-#         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-#     image_only_input = json.dumps({
-#         "images": [encoded_image]
-#     })
-#     print("Single image response:", main(image_only_input))
-    
-#     # Text and multiple images input
-#     with open("./farmE_backend/image1.png", "rb") as image_file1, \
-#          open("./farmE_backend/image2.png", "rb") as image_file2:
-#         encoded_image1 = base64.b64encode(image_file1.read()).decode('utf-8')
-#         encoded_image2 = base64.b64encode(image_file2.read()).decode('utf-8')
-    
-#     text_and_images_input = json.dumps({
-#         "text_input": "Analyze the efficiency graphs.",
-#         "images": [encoded_image1, encoded_image2]
-#     })
-#     print("Text and multiple images response:", main(text_and_images_input))
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the Multimodal Chatbot!"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)

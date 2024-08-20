@@ -55,37 +55,70 @@ Peak hour: 2019-11-20 11:00:00: 8.28 kWh
 |22:00|0.00 kWh|
 |23:00|0.00 kWh|
 
-Environmental Impact
+# Environmental Impact
 
-Environmental Impact: The clean energy generated on this day contributed to improved air quality by reducing greenhouse gas emissions, promoting a healthier environment.
+Environmental Impact: The excellent air quality with low levels of PM1, PM2.5, PM4, PM10, and particulate concentration contributes to a healthier environment. The absence of rainfall further indicates a favorable condition for energy generation.
 
 CO2 Savings: 47.22 kg
 
 # Alerts and Notifications
 
-Performance Alerts: No performance alerts were reported for this date.
-
-Weather Warnings: No weather warnings were reported for this date.
+|Performance Alerts:|No information|
+|---|---|
+|Weather Warnings:|No information|
 
 # Summary and Recommendations
 
-Summary: On November 20, 2019, the energy generation system produced a total of 62.30 kWh of AC energy and 63.38 kWh of DC energy with a conversion efficiency rate of 98.29%. The peak hour of energy generation occurred at 11:00:00, producing 8.28 kWh. The day was characterized by clear skies, a high average temperature of 29.73°C, and an average wind speed of 5.75 m/s. Air quality was excellent with low particulate levels.
+Summary: On November 20, 2019, the system generated a total of 62.30 kWh of AC energy and 63.38 kWh of DC energy with a conversion efficiency rate of 98.29%. The peak energy generation hour was 11:00:00 with 8.28 kWh. The system performed well under favorable weather conditions with 14 sunlight hours, an average temperature of 29.73°C, average wind speed of 5.75 m/s, and no rainfall. The air quality was excellent with low particulate levels.
 
-Recommendations: Based on the data available, it is recommended to explore the potential for increased energy storage capacity to leverage the peak generation hours more effectively and enhance energy output during periods of lower generation.
+Recommendations: With no information on system downtime, maintenance activities, energy consumption, on-site consumption, yesterday's energy generation, and historical data, it is recommended to collect and analyze this data to improve energy generation efficiency and optimize system performance. The data can be used to track the system's performance over time, identify areas for improvement, and make informed decisions about future maintenance and upgrades.
 
-# Hourly Energy Generation (kWh)
-
-| |11-20 03|11-20 06|11-20 09|11-20 12|11-20 15|11-20 18|11-20 21|11-21 00|
-|---|---|---|---|---|---|---|---|---|
-|Hourly Temperature (*C)|34|32|30|28|26|22|69|0|
+| | | | |Hourly Energy Generation (kWh)| | | | | |
+|---|---|---|---|---|---|---|---|---|---|
+|11-20 = 69| |11-20 03|11-2006|11-20 = 0|11-20 12|1|11-2048|11-20 21|11-21 00|
+| |Hour of Day| | | | | | | | |
+| | | | |Hourly Temperature (*C)| | | | | |
+|34| | | | | | | | | |
+|32| | | | | | | | | |
+|30| | | | | | | | | |
+|28| | | | | | | | | |
+|26| | | | | | | | | |
+|22| | | | | | | | | |
+|69|0|06| |11-20 09|11-20 12|11-20 15|11-20 18|11-20 21|11-21 00|
+| |Hour of Day| | | | | | | | |
 
 |Hourly Wind Speed (m/s)| | | | | | | | |
 |---|---|---|---|---|---|---|---|---|
-|11-20 = 69|11-20 03|11-20 06|11-20 = 0|11-20 12|11-20 48|11-20 21|11-21 00| |
+|2| | | | | | | | |
+|1| | | | | | | | |
+|1| | | | | | | | |
+|11-20 = 69|11-20 03|11-20-2006|11-20 = 0|11-20 12|1|11-2048|11-20 21|11-21 00|
+|Hour of Day| | | | | | | | |
 | |Hourly Wind Direction (%)| | | | | | | |
-| |200|180|160|140|120|100|69|48|
+| |200| | | | | | | |
+|180| | | | | | | | |
+|160| | | | | | | | |
+|140| | | | | | | | |
+|120| | | | | | | | |
+|100| | | | | | | | |
+|69|2|48| | | | | | |
 |11-20 00|11-20 03|11-20 =|11-20 09|11-20 12|11-20|11-20 -|11-20 21|11-21 00|
+|Hour of Day| | | | | | | | |
 
-Hourly Rainfall (mm)0.040.0200.000.020.04
+| |Hourly Rainfall (mm)| | | | | | | |
+|---|---|---|---|---|---|---|---|---|
+|0.04| | | | | | | | |
+|0.02| | | | | | | | |
+|0| | | | | | | | |
+|0.00| | | | | | | | |
+|0.02| | | | | | | | |
+|0.04| | | | | | | | |
+|11-20 =69|11-20 =8|11-20 06|11-20 09|11-20 12|1|11-20 -48|11-20 21|11-21 00|
 
-Hourly Particulate Size (µm)0.46800.450.440.43
+|Hourly Particulate Size (µm)| | | | | | | | |
+|---|---|---|---|---|---|---|---|---|
+|0.46| | | | | | | | |
+|0.45| | | | | | | | |
+|0.44| | | | | | | | |
+|0.43| | | | | | | | |
+|11-20 €69|11-20 =8|11-20 06|11-20 09|11-20 12|1|11-2048|11-20 21|11-21 00|

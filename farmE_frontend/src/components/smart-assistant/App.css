@@ -1,0 +1,26 @@
+header {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fefefe;
+  }
+  
+  header button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  header button:hover {
+    background-color: #0056b3;
+  }
+  
+  header button.active {
+    background-color: #28a745;
+  }
+  

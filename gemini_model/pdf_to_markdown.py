@@ -43,11 +43,11 @@ def save_to_markdown(documents, output_directory):
         print(f"Saved {output_file_path}")
 
 # Load and combine PDFs
-documents = load_and_combine_pdfs("./report_database")
+documents = load_and_combine_pdfs("./farmE_backend/report_database")
 
 print(f"Loaded {len(documents)} documents.")
 for doc in documents:
     print(f"Document: {doc.metadata['file_name']}, Pages: {doc.metadata['page_count']}")
 
 # Save combined text to Markdown files
-save_to_markdown(documents, "./output_markdown")
+save_to_markdown(documents, "./farmE_backend/output_markdown")
