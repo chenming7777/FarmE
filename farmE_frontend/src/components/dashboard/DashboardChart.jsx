@@ -36,8 +36,8 @@ export default function DashboardChart({ callback }) {
 
   const downloadReport = () => {
     const link = document.createElement("a");
-    link.href = "/dashboard/daily_energy_generation_report_2019-11-20 1.pdf";
-    link.download = "report.pdf";
+    link.href = "/dashboard/ilovepdf_merged_removed.pdf";
+    link.download = "report_november_2019.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
