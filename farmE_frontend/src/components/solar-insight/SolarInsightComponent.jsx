@@ -52,7 +52,7 @@ const SolarInsightsComponent = () => {
           }}
         >
           <Typography variant="h5">
-            Massa tortor nibh nulla condimentum imperdiet scelerisque...
+          Breakthrough in Agrivoltaics: Solar Panels Boost Crop Yields While Powering Communities...
           </Typography>
         </Box>
       </Paper>
@@ -123,7 +123,7 @@ const SolarInsightsComponent = () => {
             <CardMedia
               component="img"
               height="140"
-              image="src/assets/solar-insight/trending-1.png"
+              image="src/assets/solar-insight/todays.png"
               alt="Solar panels"
             />
             <CardContent>
@@ -151,16 +151,16 @@ const SolarInsightsComponent = () => {
             {[
               {
                 title:
-                  "Solar Overcapacity Kills Projects, Fuels Bankruptcies In China",
-                date: "12 Aug 2023",
+                  "Ladang Agrivoltaic UPM Terima Pengiktirafan Malaysia Book of Records",
+                date: "10 May 2022",
                 description:
-                  "Capacity expansion leading to a steep drop in solar component prices and a major energy reversal, and components in the...",
+                  "Naib Canselor UPM, Professor Datuk Dr Roslan Sulaiman (empat kiri) menunjukkan sijil The Malaysia Book of Records yang diserahkan oleh Timbalan Ketua Setiausaha Sektor Tenaga KeTSA, Mohamad Razif Abd Mubin (empat kanan) dalam menggunakan peluang dalam ruang solar panel di Agrivoltaic Farm UPM Puchong untuk menempatkan 25,000 unit herba berpotensi tinggi....",
               },
               {
-                title: "New Materials Can Improve Solar Cells For Indoor Use",
+                title: "Global Agrivoltaic Market Surges: Solar Integration in Agriculture Sees Rapid Growth, Projected to Exceed $10 Billion by 2030",
                 date: "15 Aug 2023",
                 description:
-                  "Researchers have synthesized new materials that can improve solar cell efficiency for indoor light...",
+                  "Agrivoltaic market accelerates, combining solar energy with agriculture for enhanced efficiency and growth...",
               },
               {
                 title:

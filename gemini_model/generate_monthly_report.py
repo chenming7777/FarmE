@@ -1,6 +1,8 @@
 import pandas as pd
 from datetime import datetime
 from fpdf import FPDF
+import matplotlib.pyplot as plt
+import os
 
 # Load data
 data = pd.read_csv('./preprocessing_data/final_complete_data.csv')
@@ -11,8 +13,8 @@ data['timestamp'] = pd.to_datetime(data['timestamp'])
 # Filter for November data
 november_data = data[data['timestamp'].dt.month == 11]
 
-# Group by month for November
-monthly_data = november_data.groupby(november_data['timestamp'].dt.to_period('M')).agg({
+# Group by day for November
+daily_data = november_data.groupby(november_data['timestamp'].dt.date).agg({
     'IRR': ['sum', 'mean'],
     'massaPM1': 'mean',
     'massaPM2': 'mean',
@@ -34,33 +36,35 @@ monthly_data = november_data.groupby(november_data['timestamp'].dt.to_period('M'
 })
 
 # Flatten the multi-level column index
-monthly_data.columns = ['_'.join(col).strip() for col in monthly_data.columns.values]
+daily_data.columns = ['_'.join(col).strip() for col in daily_data.columns.values]
 
-# Get the aggregated data for November
-row = monthly_data.iloc[0]  # Since it's monthly data, there should be only one row
+# Calculate monthly aggregates
+monthly_data = daily_data.mean()
+monthly_data['IRR_sum'] = daily_data['IRR_sum'].sum()
+monthly_data['rainfall_sum'] = daily_data['rainfall_sum'].sum()
+monthly_data['P_AC_sum'] = daily_data['P_AC_sum'].sum()
 
 # Prepare monthly report
 today_date = 'November'
-total_sunlight_hours = row['IRR_sum'] / 60  # Assuming IRR is measured per minute
-average_temp = row['temp_mean']
-average_wind_speed = row['vento_vel_mean']
-total_rainfall = row['rainfall_sum']
+total_sunlight_hours = monthly_data['IRR_sum'] / 60  # Assuming IRR is measured per minute
+average_temp = monthly_data['temp_mean']
+average_wind_speed = monthly_data['vento_vel_mean']
+total_rainfall = monthly_data['rainfall_sum']
 
 air_quality_data = {
-    'Average PM1': row['massaPM1_mean'],
-    'Average PM2.5': row['massaPM2_mean'],
-    'Average PM4': row['massaPM4_mean'],
-    'Average PM10': row['massaPM10_mean'],
-    'Average Particulate Concentration': row['numPM1_mean']  # Assuming numPM1 is the particulate concentration
+    'Average PM1': monthly_data['massaPM1_mean'],
+    'Average PM2.5': monthly_data['massaPM2_mean'],
+    'Average PM4': monthly_data['massaPM4_mean'],
+    'Average PM10': monthly_data['massaPM10_mean'],
+    'Average Particulate Concentration': monthly_data['numPM1_mean']
 }
 
 energy_data = {
-    'Total Energy Generated AC': row['P_AC_sum'] / 1000,  # Assuming P_AC is in Wh
-    'Total Energy Generated DC': row['I_DC_sum'] * row['V_DC_mean'] / 1000,  # Assuming I_DC and V_DC are in W and V
-    'Conversion Efficiency Rate': (row['P_AC_sum'] / (row['I_DC_sum'] * row['V_DC_mean'])) * 100
+    'Total Energy Generated AC': monthly_data['P_AC_sum'] / 1000,  # Assuming P_AC is in Wh
+    'Total Energy Generated DC': monthly_data['I_DC_sum'] * monthly_data['V_DC_mean'] / 1000,
+    'Conversion Efficiency Rate': (monthly_data['P_AC_sum'] / (monthly_data['I_DC_sum'] * monthly_data['V_DC_mean'])) * 100
 }
 
-# Generate the PDF report
 class PDF(FPDF):
     def header(self):
         self.set_font('Arial', 'B', 24)
@@ -89,7 +93,7 @@ pdf.set_right_margin(10)
 
 # Add content to the PDF
 weather_conditions = f"""
-Sunlight Hours: {total_sunlight_hours:.2f} hours
+Total Sunlight Hours: {total_sunlight_hours:.2f} hours
 Average Temperature: {average_temp:.2f}°C
 Average Wind Speed: {average_wind_speed:.2f} m/s
 Total Rainfall: {total_rainfall:.2f} mm
@@ -128,6 +132,56 @@ pdf.add_chapter('Energy Generation Data', energy_generation_data)
 pdf.add_chapter('Environmental Impact', environmental_impact)
 pdf.add_chapter('Alerts and Notifications', alerts_notifications)
 pdf.add_chapter('Summary and Recommendations', summary_recommendations)
+
+# Constants for image placement
+img_width = 190
+img_height = 110
+margin = 10
+x_pos = margin
+y_pos = margin
+max_y = 297
+
+# Add a new page for graphs
+pdf.add_page()
+
+# Variables to plot
+variables = {
+    'Energy Generation (kWh)': daily_data['P_AC_sum'] / 1000,
+    'Temperature (°C)': daily_data['temp_mean'],
+    'Wind Speed (ms)': daily_data['vento_vel_mean'],
+    'Rainfall (mm)': daily_data['rainfall_sum'],
+    'Particulate Size (µm)': daily_data['tamanho_medio_mean']
+}
+
+# Plot each variable
+for variable_name, variable_data in variables.items():
+    plt.figure(figsize=(10, 6))
+    plt.plot(daily_data.index, variable_data, marker='o')
+    plt.title(f'Daily {variable_name} for November')
+    plt.xlabel('Date')
+    plt.ylabel(f'{variable_name}')
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    # Save the plot as an image
+    plot_filename = f'daily_{variable_name.replace(" ", "_").replace("(", "").replace(")", "")}.png'
+    plt.savefig(plot_filename)
+    plt.close()
+
+    # Check if adding the image would exceed the page height
+    if y_pos + img_height + margin > max_y:
+        pdf.add_page()
+        y_pos = margin
+
+    # Append the plot to the PDF
+    pdf.image(plot_filename, x=x_pos, y=y_pos, w=img_width)
+    
+    # Update y position for the next image
+    y_pos += img_height + margin
+
+    # Clean up the plot image file
+    os.remove(plot_filename)
 
 # Save the PDF
 pdf_filename = f"./gemini_model/report_database/monthly_energy_generation_report_november.pdf"

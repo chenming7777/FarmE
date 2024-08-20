@@ -1,22 +1,8 @@
 # Daily Energy Generation Report on 2020-02-14
 
-# Weather Conditions
+Weather ConditionsSunlight Hours: 14Average Temperature: 27.23°CAverage Wind Speed: 7.74 m/sMost Frequent Wind Direction: 135°Total Rainfall: 0.00 mm
 
-|Sunlight Hours:|14|
-|---|---|
-|Average Temperature:|27.23°C|
-|Average Wind Speed:|7.74 m/s|
-|Most Frequent Wind Direction:|135°|
-|Total Rainfall:|0.00 mm|
-
-# Air Quality Data:
-
-|Average PM1:|2.19 μg/m³|
-|---|---|
-|Average PM2.5:|0.30 μg/m³|
-|Average PM4:|0.23 μg/m³|
-|Average PM10:|0.03 μg/m³|
-|Average Particulate Concentration:|0.47 particle/m³|
+Air Quality Data:Average PM1: 2.19 μg/m³Average PM2.5: 0.30 μg/m³Average PM4: 0.23 μg/m³Average PM10: 0.03 μg/m³Average Particulate Concentration: 0.47 particle/m³
 
 # Energy Generation Data
 
@@ -55,12 +41,11 @@ Peak hour: 2020-02-14 12:00:00: 7.02 kWh
 |22:00|0.00 kWh|
 |23:00|0.00 kWh|
 
-# Environmental Impact
+Environmental Impact
 
-The system's high conversion efficiency rate of 98.58% contributes to reducing greenhouse gas emissions and promoting clean energy production.
-
-CO2 Savings:
-37.47 kg
+|Environmental Impact:|The energy generated on this day contributed to reducing carbon emissions by 37.47 kg, promoting cleaner air and reducing reliance on fossil fuels. The clean energy production also minimized noise pollution compared to traditional power sources.|
+|---|---|
+|CO2 Savings:|37.47 kg|
 
 # Alerts and Notifications
 
@@ -70,42 +55,43 @@ CO2 Savings:
 
 # Summary and Recommendations
 
-Summary: On February 14th, 2020, the energy generation system produced a total of 49.44 kWh of AC energy and 50.15 kWh of DC energy, with a peak generation of 7.02 kWh at 12:00. The system exhibited a high conversion efficiency of 98.58%. Air quality was excellent with low levels of particulate matter. The weather conditions were favorable for solar energy generation, with 24 hours of sunlight and an average temperature of 27.23°C.
+Summary: On February 14, 2020, the energy generation system produced a total of 49.44 kWh of AC energy and 50.15 kWh of DC energy. The conversion efficiency rate was 98.58%. The peak hour was 12:00:00, generating 7.02 kWh. The day's weather conditions were favorable with 14 hours of sunlight and an average temperature of 27.23°C. The air quality was excellent with low levels of PM1, PM2.5, PM4, PM10, and particulate concentration.
 
-Recommendations: The energy generation system performed well on February 14th. To further optimize performance, consider analyzing hourly energy generation data to identify potential improvements. For instance, the system could potentially benefit from increased energy storage capacity to better manage peak demand and optimize overall efficiency. Additionally, monitoring system health and performing regular maintenance is crucial for maximizing system lifespan and ensuring consistent energy generation.
+Recommendations: To optimize energy generation, consider analyzing historical data for this date to identify potential areas for improvement. Implementing a data monitoring system can help track energy generation trends and identify potential issues. It is also recommended to investigate energy storage solutions to enhance system resilience and reduce reliance on grid power.
 
-| | | | |Hour of Day|02-14|02-14|02-14|02-14|02-14|02-14|02-14|02-14|02-15|
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| | | |09|68|0|09|69| | | | | | |
-| | | | |12|0|0|12| | | | | | |
-| | | | | |15|2| | | | | | | |
-|18| | | | |48| | | | | | | | |
-| | | | | |21|21| | | | | | | |
-
-| | |Hour of Day|02-14|02-14|02-14|02-14|02-14|02-14|02-14|02-14|02-15|
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| |09|32|28|26|24|22|68|0|09|69| |
-| | | |12|0|0|12|15|18|21| | |
-
-|Hourly Wind Speed (m/s)| | | | | | | | | |
+| | | | |Hourly Energy Generation (kWh)| | | | | |
 |---|---|---|---|---|---|---|---|---|---|
-|12| | | | | | | | | |
-|10| | | | | | | | | |
-|2| | | | | | | | | |
 |1| | | | | | | | | |
-|1| | | | | | | | | |
-| |68|0|09| | | |69| | |
-| |02-14|=|02-14|02-14 09|02-14 12|02-14 15|02-14 18|02-14 21|02-15|
-| | | | |Hourly Wind Direction (%)| | | | | |
-|200| | | | | | | | | |
-|180| | | | | | | | | |
-|160| | | | | | | | | |
-|140| | | | | | | | | |
-|120| | | | | | | | | |
-|100| | | | | | | | | |
-| |69|6|06| |2|48|69| | |
-| |02-14 5|02-14 =|02-14|02-14 09|02-14 12|02-14 =|02-14 -|02-14 21|02-15|
+| |02-14 €69|02-14 €0|1|02-14 =0|02-14 12|02-14 =2|02-14 -48|02-14 21|02-15 =69|
 | | | | |Hour of Day| | | | | |
+| | | | |Hourly Temperature (*C)| | | | | |
+|32| | | | | | | | | |
+|28| | | | | | | | | |
+|26| | | | | | | | | |
+|24| | | | | | | | | |
+|22| | | | | | | | | |
+| |68|0|09| |69| | | | |
+| |02-14 =|02-14 €|02-14 =|02-14 09|Hour of Day02-14 12|02-14 15|02-14 18|02-14 21|02-15 [|
+
+|Hourly Wind Speed (m/s)| | | | | | | | | | |
+|---|---|---|---|---|---|---|---|---|---|---|
+|12| | | | | | | | | | |
+|10| | | | | | | | | | |
+|2| | | | | | | | | | |
+|1| | | | | | | | | | |
+|1| | | | | | | | | | |
+| |68|0|09| | | |69| | | |
+| |02-14|=|02-14|02-14 09|Hour of Day|02-14 12|02-14 15|02-14 18|02-14 21|02-15|
+| | | | |Hourly Wind Direction (%)| | | | | | |
+|200| | | | | | | | | | |
+|180| | | | | | | | | | |
+|160| | | | | | | | | | |
+|140| | | | | | | | | | |
+|120| | | | | | | | | | |
+|100| | | | | | | | | | |
+| |69|6|06| |2|48|69| | | |
+| |02-14 5|02-14 =|02-14|02-14 09|02-14 12|02-14 =|02-14 -|02-14 21|02-15| |
+| | | | |Hour of Day| | | | | | |
 
 | | | |Hourly Rainfall (mm)| | | | | | | | | |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -121,8 +107,8 @@ Recommendations: The energy generation system performed well on February 14th. T
 |0.65| | | | | | | | | | | | |
 |0.60| | | | | | | | | | | | |
 | |1| | | | | | | | | | | |
-|80.55| | | | | | | | | | | | |
+|0.55| | | | | | | | | | | | |
 |0.50| | | | | | | | | | | | |
 |0.45| | | | | | | | | | | | |
 | |09|8| |2|48|69| | | | | | |
-|02-14|5|02-14|06|02-14|09|02-14|12|02-14|02-14|21|02-15| |
+|02-14|5|02-14|06|02-14|09|02-14|12|02-14|21|02-15| | |
