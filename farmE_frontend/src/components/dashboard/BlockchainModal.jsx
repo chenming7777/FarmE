@@ -22,9 +22,10 @@ import axios from "axios";
 const BlockchainEnergyDataModal = ({ open, onClose }) => {
   const [blockchainData, setBlockchainData] = useState([]);
   const [selectedBlock, setSelectedBlock] = useState(null);
+  const [selectedBlockIndex, setSelectedBlockIndex] = useState(null);
   const [isUsingFallbackData, setIsUsingFallbackData] = useState(true);
-  const [enableIntegrateBC, setEnableIntegrateBC] = useState(false);
-
+  const [enableIntegrateBC, setEnableIntegrateBC] = useState(false); //hardcoded to false
+  
   const originalDates = [
     "2024-08-01 09:00:00",
     "2024-08-01 12:00:00",
@@ -57,32 +58,61 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            // "https://farm-e-blockchain.vercel.app/blocks"
-            "http://127.0.0.1:8000/blocks"
+            "https://farm-e-blockchain.vercel.app/blocks"
           );
-          console.log("response: ", response);
-          response.data.shift();
-          if (response.data.length > 0) {
-            setBlockchainData(response.data);
-            setSelectedBlock(response.data[1]);
+
+          if (Array.isArray(response.data)) {
+            const blocks = response.data.slice(1); // Remove the genesis block
+
+            const parsedData = blocks.map((block, index) => {
+              const parsedBlockData = block.data
+                .map((item) => {
+                  try {
+                    return typeof item === "string" ? JSON.parse(item) : item;
+                  } catch (error) {
+                    console.error(
+                      `Error parsing item in block ${index}:`,
+                      error
+                    );
+                    return null;
+                  }
+                })
+                .filter((item) => item !== null);
+
+              return {
+                ...block,
+                data: parsedBlockData,
+              };
+            });
+
+            console.log("Parsed data:", parsedData);
+            console.log("Blockchain data fetched:", blockchainData);
+
+            // Set state only after all parsing is complete
+            setBlockchainData(parsedData);
+            setSelectedBlock(parsedData[0]); // Set to the first block
             setIsUsingFallbackData(false);
           } else {
-            throw new Error("Empty response");
+            throw new Error("Invalid response structure");
           }
         } catch (error) {
           console.error("Error fetching blockchain data:", error);
           setBlockchainData([]);
           setIsUsingFallbackData(true);
-          setSelectedBlock(originalDates[0]);
+          setSelectedBlock(null);
         }
       };
 
       fetchData();
     }
-  }, []);
+  }, [enableIntegrateBC]);
 
-  const handleBlockSelection = (block) => {
-    setSelectedBlock(block);
+  // const handleBlockSelection = (block) => {
+  //   setSelectedBlock(block);
+  // };
+
+  const handleBlockSelection = (index) => {
+    setSelectedBlockIndex(index);
   };
 
   const electricalData = {
@@ -104,7 +134,7 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
   const filteredData = isUsingFallbackData
     ? originalElectricalData
     : selectedBlock
-      ? JSON.parse(selectedBlock.data[1])
+      ? selectedBlock.data[1]
       : null;
 
   const groupedMeasurements = isUsingFallbackData
@@ -204,24 +234,26 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
                       {date}
                     </Typography>
                   ))
-                : blockchainData.map((block, index) => (
-                    <Typography
-                      key={index}
-                      variant="body2"
-                      sx={{
-                        p: 1,
-                        cursor: "pointer",
-                        backgroundColor:
-                          selectedDate ===
-                          new Date(block.timestamp * 1000).toLocaleString()
-                            ? "#e0e0e0"
-                            : "transparent",
-                      }}
-                      onClick={() => handleBlockSelection(block)}
-                    >
-                      {new Date(block.timestamp * 1000).toLocaleString()}
-                    </Typography>
-                  ))}
+                : blockchainData.map((block, index) =>
+                    block.data.map((record, index) => (
+                      <Typography
+                        key={index}
+                        variant="body2"
+                        sx={{
+                          p: 1,
+                          cursor: "pointer",
+                          backgroundColor:
+                            selectedDate ===
+                            new Date(block.timestamp * 1000).toLocaleString()
+                              ? "#e0e0e0"
+                              : "transparent",
+                        }}
+                        onClick={() => handleBlockSelection(block)}
+                      >
+                        {new Date(block.timestamp * 1000).toLocaleString()}
+                      </Typography>
+                    ))
+                  )}
             </Paper>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -241,7 +273,8 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
                       display="flex"
                       alignItems="center"
                     >
-                      Block hash: 3330b5709caf5688d4e229bfbd79efde4d430d63ed9e20079a538d09ca222a4ds
+                      Block hash:
+                      3330b5709caf5688d4e229bfbd79efde4d430d63ed9e20079a538d09ca222a4ds
                       <IconButton size="small">
                         <CheckCircle fontSize="small" />
                       </IconButton>
@@ -259,7 +292,8 @@ const BlockchainEnergyDataModal = ({ open, onClose }) => {
                       display="flex"
                       alignItems="center"
                     >
-                      MerkleRoot: a9ds10f0c44b88b111fb317f34bee11b2a1a595fc0d7fec9dd8d68f8c73e5c85
+                      MerkleRoot:
+                      a9ds10f0c44b88b111fb317f34bee11b2a1a595fc0d7fec9dd8d68f8c73e5c85
                       <IconButton size="small">
                         <CheckCircle fontSize="small" />
                       </IconButton>
