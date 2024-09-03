@@ -11,6 +11,7 @@ import FinancialOverview from "./pages/financial-overview/FinancialOverview";
 import SolarInsight from "./pages/solar-insight/SolarInsight";
 import SystemCare from "./pages/system-care/SystemCare";
 import SmartAssistant from "./pages/smart-assistant/SmartAssistant";
+import DashboardFarmer from "./pages/dashboard-farmer/DashboardFarmer";
 
 import {
   createBrowserRouter,
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/dashboard-farmer",
+        element: <DashboardFarmer />,
       },
       {
         path: "/notification",

@@ -73,6 +73,7 @@ export default function CustomDrawer() {
         <List>
           {[
             "Dashboard",
+            "Dashboard Farmer",
             "Virtual Twin",
             "Financial Overview",
             "System Care",

@@ -3,6 +3,8 @@ export const matchPathName = (path) => {
   switch (path) {
     case "/dashboard":
       return "Dashboard";
+    case "/dashboard-farmer":
+      return "Dashboard Farmer";
     case "/virtual-twin":
       return "Virtual Twin";
     case "/financial-overview":

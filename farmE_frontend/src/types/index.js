@@ -4,6 +4,11 @@ export const sidebarList = {
     inactive: "src/assets/sidebar/inactive/home.png",
     url: "/dashboard",
   },
+  "Dashboard Farmer": {
+    active: "src/assets/sidebar/active/home.png",
+    inactive: "src/assets/sidebar/inactive/home.png",
+    url: "/dashboard-farmer",
+  },
   "Virtual Twin": {
     active: "src/assets/sidebar/active/chart.png",
     inactive: "src/assets/sidebar/inactive/chart.png",
