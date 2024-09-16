@@ -42,4 +42,14 @@ export const sidebarDown = {
     inactive: "src/assets/sidebar/inactive/bell.png",
     url: "/notification",
   },
+  "Solar Companies": {
+    active: "src/assets/sidebar/active/tool.png",
+    inactive: "src/assets/sidebar/inactive/tool.png",
+    url: "/solar-companies",
+  },
+  Subscription: {
+    active: "src/assets/sidebar/active/tool.png",
+    inactive: "src/assets/sidebar/inactive/tool.png",
+    url: "/subscription",
+  },
 };
