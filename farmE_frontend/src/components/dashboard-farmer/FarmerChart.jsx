@@ -58,6 +58,9 @@ export default function FarmerChart({ callback }) {
           justifyContent="space-between"
           alignItems="center"
           // mb={2}
+          sx={{
+            minWidth: "850px",
+          }}
         >
           <Typography
             variant="h6"
