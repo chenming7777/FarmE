@@ -73,6 +73,7 @@ export default function CustomDrawer() {
         <List>
           {[
             "Dashboard",
+            "Dashboard Farmer",
             "Virtual Twin",
             "Financial Overview",
             "System Care",
@@ -247,75 +248,77 @@ export default function CustomDrawer() {
       >
         <div>
           <List>
-            {["Notification"].map((text, index) => (
-              <NavLink
-                key={text}
-                to={sidebarDown[text].url}
-                className={({ isActive, isPending }) =>
-                  isActive
-                    ? "active router-nav-link"
-                    : isPending
-                      ? "pending router-nav-link"
-                      : ""
-                }
-              >
-                {({ isActive }) =>
-                  isActive ? (
-                    <div
-                      style={{
-                        borderRadius: "20px",
-                        padding: "0.8rem 2rem",
-                        backgroundColor: "#fff",
-                        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "0.3rem",
-                      }}
-                    >
-                      <Avatar
-                        src={sidebarDown[text].active}
+            {["Solar Companies", "Subscription", "Notification"].map(
+              (text, index) => (
+                <NavLink
+                  key={text}
+                  to={sidebarDown[text].url}
+                  className={({ isActive, isPending }) =>
+                    isActive
+                      ? "active router-nav-link"
+                      : isPending
+                        ? "pending router-nav-link"
+                        : ""
+                  }
+                >
+                  {({ isActive }) =>
+                    isActive ? (
+                      <div
                         style={{
-                          width: "25px",
-                          height: "25px",
-                          backgroundColor: "#6FC635",
-                          padding: "0.5rem",
+                          borderRadius: "20px",
+                          padding: "0.8rem 2rem",
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "0.3rem",
                         }}
-                      />
-                      <Typography
-                        style={{ marginLeft: "1rem", fontWeight: "bold" }}
                       >
-                        {text}
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div
-                      style={{
-                        borderRadius: "20px",
-                        padding: "0.8rem 2rem",
-                        display: "flex",
-                        alignItems: "center",
-                        marginBottom: "0.3rem",
-                      }}
-                    >
-                      <Avatar
-                        src={sidebarDown[text].inactive}
+                        <Avatar
+                          src={sidebarDown[text].active}
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            backgroundColor: "#6FC635",
+                            padding: "0.5rem",
+                          }}
+                        />
+                        <Typography
+                          style={{ marginLeft: "1rem", fontWeight: "bold" }}
+                        >
+                          {text}
+                        </Typography>
+                      </div>
+                    ) : (
+                      <div
                         style={{
-                          width: "25px",
-                          height: "25px",
-                          backgroundColor: "#FFF",
-                          padding: "0.5rem",
+                          borderRadius: "20px",
+                          padding: "0.8rem 2rem",
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "0.3rem",
                         }}
-                      />
-                      <Typography
-                        style={{ marginLeft: "1rem", fontWeight: "bold" }}
                       >
-                        {text}
-                      </Typography>
-                    </div>
-                  )
-                }
-              </NavLink>
-            ))}
+                        <Avatar
+                          src={sidebarDown[text].inactive}
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            backgroundColor: "#FFF",
+                            padding: "0.5rem",
+                          }}
+                        />
+                        <Typography
+                          style={{ marginLeft: "1rem", fontWeight: "bold" }}
+                        >
+                          {text}
+                        </Typography>
+                      </div>
+                    )
+                  }
+                </NavLink>
+              )
+            )}
           </List>
         </div>
         {/* <div>

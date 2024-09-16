@@ -11,6 +11,9 @@ import FinancialOverview from "./pages/financial-overview/FinancialOverview";
 import SolarInsight from "./pages/solar-insight/SolarInsight";
 import SystemCare from "./pages/system-care/SystemCare";
 import SmartAssistant from "./pages/smart-assistant/SmartAssistant";
+import DashboardFarmer from "./pages/dashboard-farmer/DashboardFarmer";
+import SolarCompanies from "./pages/solar-companies/SolarCompanies";
+import Subscription from "./pages/subscription/Subscription";
 
 import {
   createBrowserRouter,
@@ -31,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/dashboard-farmer",
+        element: <DashboardFarmer />,
       },
       {
         path: "/notification",
@@ -55,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/smart-assistant",
         element: <SmartAssistant />,
+      },
+      {
+        path: "/solar-companies",
+        element: <SolarCompanies />,
+      },
+      {
+        path: "/subscription",
+        element: <Subscription />,
       },
     ],
   },

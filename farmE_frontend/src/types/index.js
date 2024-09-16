@@ -4,6 +4,11 @@ export const sidebarList = {
     inactive: "src/assets/sidebar/inactive/home.png",
     url: "/dashboard",
   },
+  "Dashboard Farmer": {
+    active: "src/assets/sidebar/active/home.png",
+    inactive: "src/assets/sidebar/inactive/home.png",
+    url: "/dashboard-farmer",
+  },
   "Virtual Twin": {
     active: "src/assets/sidebar/active/chart.png",
     inactive: "src/assets/sidebar/inactive/chart.png",
@@ -36,5 +41,15 @@ export const sidebarDown = {
     active: "src/assets/sidebar/active/bell.png",
     inactive: "src/assets/sidebar/inactive/bell.png",
     url: "/notification",
+  },
+  "Solar Companies": {
+    active: "src/assets/sidebar/active/tool.png",
+    inactive: "src/assets/sidebar/inactive/tool.png",
+    url: "/solar-companies",
+  },
+  Subscription: {
+    active: "src/assets/sidebar/active/tool.png",
+    inactive: "src/assets/sidebar/inactive/tool.png",
+    url: "/subscription",
   },
 };
