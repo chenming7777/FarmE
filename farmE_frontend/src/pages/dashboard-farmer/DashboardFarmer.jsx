@@ -33,6 +33,7 @@ import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import BlockchainEnergyDataModal from "../../components/dashboard/BlockchainModal";
 
 import DashboardChart from "../../components/dashboard/DashboardChart";
+import FarmerChart from "../../components/dashboard-farmer/FarmerChart";
 import WeatherCondition from "../../components/dashboard/WeatherCondition";
 import PerformanceSection from "../../components/dashboard/PeeformanceSection";
 import WeatherMiscCard from "../../components/dashboard-farmer/WeatherMiscCard";
@@ -439,7 +440,9 @@ const DashboardFarmer = () => {
         }}
       >
         <div>
-          <DashboardChart callback={toggleModal} />
+          {/* <DashboardChart callback={toggleModal} />
+           */}
+          <FarmerChart callback={toggleModal} />
         </div>
 
         <div
