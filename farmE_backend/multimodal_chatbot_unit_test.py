@@ -95,29 +95,29 @@ def main(json_input):
 #  "images": [encoded_image1, encoded_image2, ...]}
 # jpg and png formats are supported for images
 
-# if __name__ == "__main__":
-#     # Text-only input
-#     text_only_input = json.dumps({
-#         "text_input": "What are the best practices for maintaining solar panels in an agricultural setting?"
-#     })
-#     print("Text-only response:", main(text_only_input))
+if __name__ == "__main__":
+    # Text-only input
+    text_only_input = json.dumps({
+        "text_input": "What are the best practices for maintaining solar panels in an agricultural setting?"
+    })
+    print("Text-only response:", main(text_only_input))
     
-#     # Single image input
-#     with open("./farmE_backend/test.png", "rb") as image_file:
-#         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-#     image_only_input = json.dumps({
-#         "images": [encoded_image]
-#     })
-#     print("Single image response:", main(image_only_input))
+    # Single image input
+    with open("./farmE_backend/test.png", "rb") as image_file:
+        encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+    image_only_input = json.dumps({
+        "images": [encoded_image]
+    })
+    print("Single image response:", main(image_only_input))
     
-#     # Text and multiple images input
-#     with open("./farmE_backend/image1.png", "rb") as image_file1, \
-#          open("./farmE_backend/image2.png", "rb") as image_file2:
-#         encoded_image1 = base64.b64encode(image_file1.read()).decode('utf-8')
-#         encoded_image2 = base64.b64encode(image_file2.read()).decode('utf-8')
+    # Text and multiple images input
+    with open("./farmE_backend/image1.png", "rb") as image_file1, \
+         open("./farmE_backend/image2.png", "rb") as image_file2:
+        encoded_image1 = base64.b64encode(image_file1.read()).decode('utf-8')
+        encoded_image2 = base64.b64encode(image_file2.read()).decode('utf-8')
     
-#     text_and_images_input = json.dumps({
-#         "text_input": "Analyze the efficiency graphs.",
-#         "images": [encoded_image1, encoded_image2]
-#     })
-#     print("Text and multiple images response:", main(text_and_images_input))
+    text_and_images_input = json.dumps({
+        "text_input": "Analyze the efficiency graphs.",
+        "images": [encoded_image1, encoded_image2]
+    })
+    print("Text and multiple images response:", main(text_and_images_input))

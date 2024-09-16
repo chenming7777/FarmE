@@ -1,8 +1,9 @@
 import "./FarmEChatbot.css";
+import "./MarkdownRenderer.css"; // Import the Markdown styles
 import { assets } from "../../assets/smart-assistant/assets";
 import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
-
+import ReactMarkdown from "react-markdown";  // Import the library
 
 
 
@@ -226,10 +227,12 @@ const FarmEChatbot = () => {
                   </div>
                 )}
                 {message.type === "bot" && (
-                  <div
-                    className="bot-message"
-                    dangerouslySetInnerHTML={{ __html: message.content }}
-                  ></div>
+                  <div className="bot-message">
+                    {/* Use ReactMarkdown to render the markdown content */}
+                    <div className="markdown-content">
+                      <ReactMarkdown>{message.content.trim()}</ReactMarkdown>
+                    </div>
+                  </div>
                 )}
               </div>
             ))}

@@ -57,7 +57,15 @@ def get_vector_store(text_chunks):
 def get_conversation_chain():
     prompt_template = """
     Answer the question as detailed as possible from the provided context, make sure to provide all the details\n\n
-    You should only provide the plain text avoid using *, **, or any other markdown syntax\n\n
+    Answer it in markdown format\n\n
+    
+    **Guidelines for Responses:**
+    - Format your responses using **Markdown** syntax.
+    - Use `*italic*` for emphasis and `**bold**` for strong emphasis.
+    - Use headers (`# Header`) to organize content.
+    - Create lists for structured information (`- Unordered list item` or `1. Ordered list item`).
+    - Use inline code format (`` `inline code` ``) for technical terms or code snippets.\n\n    
+    
     Context:\n {context}?\n
     Question: \n{question}\n
 

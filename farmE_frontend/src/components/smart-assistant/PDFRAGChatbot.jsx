@@ -1,7 +1,9 @@
 import "./FarmEChatbot.css";
 import { assets } from "../../assets/smart-assistant/assets";
+import "./MarkdownRenderer.css"; // Import the Markdown styles
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import ReactMarkdown from "react-markdown";  // Import the library
 
 
 const PDFRAGChatbot = () => {
@@ -83,7 +85,7 @@ const PDFRAGChatbot = () => {
               <img src={assets.message_icon} alt="" />
             </div>
             <div className="card">
-              <p>Send mee the report on the November</p>
+              <p>Send me the report on the November</p>
               <img src={assets.code_icon} alt="" />
             </div>
           </div>
@@ -111,10 +113,12 @@ const PDFRAGChatbot = () => {
                   </div>
                 )}
                 {message.type === "bot" && (
-                  <div
-                    className="bot-message"
-                    dangerouslySetInnerHTML={{ __html: message.content }}
-                  ></div>
+                  <div className="bot-message">
+                    {/* Trim the message content before passing to ReactMarkdown */}
+                    <div className="markdown-content">
+                      <ReactMarkdown>{message.content.trim()}</ReactMarkdown>
+                    </div>
+                  </div>
                 )}
               </div>
             ))}

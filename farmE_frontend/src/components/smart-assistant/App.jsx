@@ -8,8 +8,8 @@ const App = () => {
   return (
     <div>
       <header>
-        <button onClick={() => setCurrentChatbot("farmE")}>FarmE Chatbot</button>
-        <button onClick={() => setCurrentChatbot("pdfRAG")}>PDF RAG Chatbot</button>
+        <button className="custom-btn" style={{backgroundColor: "#cbe4ff", marginRight: 5}} onClick={() => setCurrentChatbot("farmE")}>FarmE Chatbot</button>
+        <button className="custom-btn" style={{backgroundColor: "#cbe4ff"}} onClick={() => setCurrentChatbot("pdfRAG")}>PDF RAG Chatbot</button>
       </header>
       {currentChatbot === "farmE" && <FarmEChatbot />}
       {currentChatbot === "pdfRAG" && <PDFRAGChatbot />}

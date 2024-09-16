@@ -10,7 +10,7 @@ header {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: #cbe4ff !important;
     color: white;
     cursor: pointer;
     font-size: 16px;
@@ -24,3 +24,6 @@ header {
     background-color: #28a745;
   }
   
+  .custom-btn {
+    background-color: #cbe4ff !important;
+  }
