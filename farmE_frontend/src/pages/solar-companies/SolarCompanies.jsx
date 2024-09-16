@@ -23,51 +23,49 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
 
 const categories = [
-  "Category01",
-  "Category02",
-  "Category03",
-  "Category04",
-  "Category05",
+  "Finding Farmers",
+  "Finding Farmer Land",
+  "Solar Hardware installer",
 ];
 
 const solarCompanies = [
   {
-    name: "Solar Company 1",
+    name: "Solar Eneergy Sdn Bhd",
     location: "Shah Alam, Selangor",
     image: "src/assets/solar-companies/solar-1.png",
     profile: " ",
   },
   {
-    name: "Solar Company 2",
-    location: "Shah Alam, Selangor",
+    name: "Sun Solar Sdn Bhd",
+    location: "Taiping, Perak",
   },
   {
-    name: "Solar Company 3",
-    location: "Shah Alam, Selangor",
+    name: "Solar Tirbune Sdn Bhd",
+    location: "Muar, Johor",
   },
   {
-    name: "Solar Company 4",
-    location: "Shah Alam, Selangor",
+    name: "SolarSage",
+    location: "Banting, Selangor",
   },
   {
-    name: "Solar Company 5",
-    location: "Shah Alam, Selangor",
+    name: "LumenFields Solar",
+    location: "Kuala Terengganu, Terengganu",
   },
   {
-    name: "Solar Company 6",
-    location: "Shah Alam, Selangor",
+    name: "HelioHarvest Farms",
+    location: "Alor Setar, Kedah",
   },
   {
-    name: "Solar Company 7",
-    location: "Shah Alam, Selangor",
+    name: "Photon Fields",
+    location: "Sandakan, Sabah",
   },
   {
-    name: "Solar Company 8",
-    location: "Shah Alam, Selangor",
+    name: "SunGrow Farms",
+    location: "Kuching, Sarawak",
   },
   {
-    name: "Solar Company 9",
-    location: "Shah Alam, Selangor",
+    name: "SolarBloom Energy",
+    location: "Kuantan, Pahang",
   },
 ];
 
@@ -104,19 +102,13 @@ export default function SolarCompanies() {
             }}
           />
           <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Filter01</InputLabel>
+            <InputLabel>Preference</InputLabel>
             <Select label="Filter01">
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
+              <MenuItem value="option1">Seeking Land</MenuItem>
+              <MenuItem value="option2">Seeking Farmer</MenuItem>
             </Select>
           </FormControl>
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Filter02</InputLabel>
-            <Select label="Filter02">
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-            </Select>
-          </FormControl>
+          
           <Typography
             variant="h6"
             gutterBottom
@@ -154,22 +146,8 @@ export default function SolarCompanies() {
           <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel>Location</InputLabel>
             <Select label="Location">
-              <MenuItem value="location1">Location 1</MenuItem>
-              <MenuItem value="location2">Location 2</MenuItem>
-            </Select>
-          </FormControl>
-          <Typography
-            variant="h6"
-            gutterBottom
-            sx={{ mt: 2, fontWeight: "bold" }}
-          >
-            X
-          </Typography>
-          <FormControl fullWidth sx={{ mb: 2 }}>
-            <InputLabel>Location</InputLabel>
-            <Select label="Location">
-              <MenuItem value="location1">Location 1</MenuItem>
-              <MenuItem value="location2">Location 2</MenuItem>
+              <MenuItem value="location1">West Malaysia</MenuItem>
+              <MenuItem value="location2">East Malaysia</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -300,7 +278,7 @@ export default function SolarCompanies() {
                             marginRight: 2,
                           }}
                         >
-                          Tag#1
+                          Farmer
                         </Button>
                         <Button
                           size="small"
@@ -313,7 +291,7 @@ export default function SolarCompanies() {
                             padding: "8px 40px",
                           }}
                         >
-                          Tag2
+                          Land
                         </Button>
                       </Box>
                       <Button
